@@ -292,7 +292,7 @@ def select():
         
         ventanaitf.mainloop()
         
-    #TERCERA VENTANA
+    #TERCERA VENTANA 
     if menu.current()==1:
         ventanatf=tk.Tk()
         ventanatf.title("Filtro No Ideal por TF")
