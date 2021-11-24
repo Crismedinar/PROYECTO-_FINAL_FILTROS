@@ -269,6 +269,357 @@ def select():
 
         else:
             messagebox.showerror(message="No has seleccionado un comando",title="Error")
+    def TF():
+        def backButter():
+            ventanaButter.destroy()
+        def FiltroButter():
+            if menuButter.current()==0:
+                def backButter0():
+                    ventanaButter0.destroy()
+                def Butter0():
+                    radio0=entryButter0.get()
+                    orden0=entryButter0.get()
+                    if radio0.isnumeric() == True and orden0.isnumeric()==True:
+                        radio0=int(radio0)
+                        orden0=int(orden0)
+                        img = cv2.cvtColor(imagen,cv2.COLOR_BGR2GRAY)
+                        f=np.fft.fft2(img) 
+                        fshift=np.fft.fftshift(f)
+                        rows,cols=img.shape
+                        crow,ccol=int(rows/2),int(cols/2)
+                        D0=radio0
+                        N=orden0
+                        mask=np.ones((rows,cols))
+                        for i in range (rows):
+                            for j in range (cols):
+                                dist=(i-crow)**2+(j-ccol)**2
+                                if dist==0:
+                                    continue
+                                mask[i,j]=np.sqrt((1+(D0/dist)**(2*N)))**(-1)
+                        f_ishift=fshift*mask
+                        f_shift=np.fft.ifftshift(f_ishift)
+                        img_back=np.fft.ifft2(f_shift)
+                        img_back=np.abs(img_back)
+                        plt.subplot(131),plt.imshow(img,cmap='gray')
+                        plt.title('Original'),plt.xticks([]),plt.yticks([])
+                        plt.subplot(132),plt.imshow(mask,cmap='gray')
+                        plt.title('Mascarilla'),plt.xticks([]),plt.yticks([])
+                        plt.subplot(133),plt.imshow(img_back,cmap='gray')
+                        plt.title('Imagen filtrada'),plt.xticks([]),plt.yticks([])
+                        plt.show()
+                    else:
+                        messagebox.showerror(message="Los datos ingresados no son númericos",title="Error")
+                ventanaButter0=tk.Tk()
+                ventanaButter0.title("Butter Pasa Bajas")
+                miframeButter0=tk.Frame(ventanaButter0)
+                miframeButter0.pack()
+                miframeButter0.config(bg="green",cursor='hand2')
+                
+                mensajeButter0=tk.Label(miframeButter0,text="Ingresa el valor del radio",font=('Arial 20'),bg='green')
+                mensajeButter0.grid(row=0,column=1,padx=10,pady=10)
+                
+                entryButter0 = tk.Entry(miframeButter0,font="Arial 18")
+                entryButter0.grid(row=1,column=1,padx=5,pady=5)
+                entryButter0.config(justify="center")
+                
+                mensajeButter0=tk.Label(miframeButter0,text="Ingresa el orden del filtro",font=('Arial 20'),bg='green')
+                mensajeButter0.grid(row=2,column=1,padx=10,pady=10)
+                
+                entry2Butter0 = tk.Entry(miframeButter0,font="Arial 18")
+                entry2Butter0.grid(row=3,column=1,padx=5,pady=5)
+                entry2Butter0.config(justify="center")
+                
+                botonButter0=tk.Button(miframeButter0,text="FILTRAR",font="Arial 20",activebackground="green",command=Butter0)
+                botonButter0.grid(row=4,column=2,padx=5,pady=5)
+                
+                boton2Butter0=tk.Button(miframeButter0,text="REGRESAR",font="Arial 20",activebackground="red",command = backButter0)
+                boton2Butter0.grid(row=4,column=0,padx=5,pady=5)
+                ventanaButter0.mainloop()
+                
+            elif menuButter.current()==1:
+                def backButter1():
+                    ventanaButter1.destroy()
+                def Butter1():
+                    radio1=entryButter1.get()
+                    orden1=entryButter1.get()
+                    if radio1.isnumeric() == True and orden1.isnumeric()==True:
+                        radio1=int(radio1)
+                        orden1=int(orden1)
+                        if radio1 <= 43:
+                            img = cv2.cvtColor(imagen,cv2.COLOR_BGR2GRAY)
+                            f=np.fft.fft2(img) 
+                            fshift=np.fft.fftshift(f)
+                            rows,cols=img.shape
+                            crow,ccol=int(rows/2),int(cols/2)
+                            D0=radio1
+                            N=orden1
+                            mask=np.ones((rows,cols))
+                            for i in range (rows):
+                                for j in range (cols):
+                                    dist=(i-crow)**2+(j-ccol)**2
+                                    mask[i,j]=np.sqrt((1+(dist/D0)**(2*N)))**(-1)
+                            f_ishift=fshift*mask
+                            f_shift=np.fft.ifftshift(f_ishift)
+                            img_back=np.fft.ifft2(f_shift)
+                            img_back=np.abs(img_back)
+                            plt.subplot(131),plt.imshow(img,cmap='gray')
+                            plt.title('Original'),plt.xticks([]),plt.yticks([])
+                            plt.subplot(132),plt.imshow(mask,cmap='gray')
+                            plt.title('Mascarilla'),plt.xticks([]),plt.yticks([])
+                            plt.subplot(133),plt.imshow(img_back,cmap='gray')
+                            plt.title('Imagen filtrada'),plt.xticks([]),plt.yticks([])
+                            plt.show()
+                        else:
+                            messagebox.showerror(message="El radio debe ser menor o igual a 43",title="Error")
+                    else:
+                        messagebox.showerror(message="Los datos ingresados no son númericos",title="Error")
+                ventanaButter1=tk.Tk()
+                ventanaButter1.title("Butter Pasa Altas")
+                miframeButter1=tk.Frame(ventanaButter1)
+                miframeButter1.pack()
+                miframeButter1.config(bg="purple1",cursor='hand2')
+                mensajeButter0=tk.Label(miframeButter1,text="Ingresa el valor del radio",font=('Arial 20'),bg='purple1')
+                mensajeButter0.grid(row=0,column=1,padx=10,pady=10)
+                
+                entryButter1 = tk.Entry(miframeButter1,font="Arial 18")
+                entryButter1.grid(row=1,column=1,padx=5,pady=5)
+                entryButter1.config(justify="center")
+                
+                mensajeButter1=tk.Label(miframeButter1,text="Ingresa el orden del filtro",font=('Arial 20'),bg='purple1')
+                mensajeButter1.grid(row=2,column=1,padx=10,pady=10)
+                
+                entry2Butter1 = tk.Entry(miframeButter1,font="Arial 18")
+                entry2Butter1.grid(row=3,column=1,padx=5,pady=5)
+                entry2Butter1.config(justify="center")
+                
+                botonButter1=tk.Button(miframeButter1,text="FILTRAR",font="Arial 20",activebackground="green",command=Butter1)
+                botonButter1.grid(row=4,column=2,padx=5,pady=5)
+                
+                boton2Butter1=tk.Button(miframeButter1,text="REGRESAR",font="Arial 20",activebackground="red",command = backButter1)
+                boton2Butter1.grid(row=4,column=0,padx=5,pady=5)
+                ventanaButter1.mainloop()
+            if menuButter.current()==2:
+                def backButter2():
+                    ventanaButter2.destroy()
+                def limpiar():
+                    entryButter2.delete(0,tk.END)
+                    entry2Butter2.delete(0,tk.END)
+                    entry3Butter2.delete(0,tk.END)
+                    entry4Butter2.delete(0,tk.END)
+                def Butter2():
+                    radio2=entryButter2.get()
+                    orden2=entry2Butter2.get()
+                    radio3=entry3Butter2.get()
+                    orden3=entry4Butter2.get()
+                    if radio2.isnumeric()==True and orden2.isnumeric()==True and radio3.isnumeric()==True and orden3.isnumeric()==True:
+                        radio2 = int(radio2)
+                        orden2 = int(orden2)
+                        radio3 = int(radio3)
+                        orden3 = int(orden3)
+                        if radio2>radio3:
+                            img = cv2.cvtColor(imagen,cv2.COLOR_BGR2GRAY)
+                            f=np.fft.fft2(img)
+                            fshift=np.fft.fftshift(f)
+                            rows,cols=img.shape
+                            crow,ccol=int(rows/2),int(cols/2)
+                            D0=radio2
+                            N=orden2
+                            mask=np.ones((rows,cols))
+                            #Pasa Bajas
+                            for i in range (rows):
+                                for j in range (cols):
+                                    dist=(i-crow)**2+(j-ccol)**2
+                                    mask[i,j]=np.sqrt((1+(dist/D0)**(2*N)))**(-1)
+                            D0=radio3
+                            N=orden3
+                            mask1=np.ones((rows,cols))
+                            #Pasa Altas
+                            for i in range (rows):
+                                for j in range (cols):
+                                    dist=(i-crow)**2+(j-ccol)**2
+                                    if dist==0:
+                                        continue
+                                    mask1[i,j]=np.sqrt((1+(D0/dist)**(2*N)))**(-1)
+                            f_ishift=fshift*mask*mask1
+                            f_shift=np.fft.ifftshift(f_ishift)
+                            img_back=np.fft.ifft2(f_shift)
+                            img_back=np.abs(img_back)
+                            plt.subplot(131),plt.imshow(img,cmap='gray')
+                            plt.title('Original'),plt.xticks([]),plt.yticks([])
+                            plt.subplot(132),plt.imshow(mask,cmap='gray')
+                            plt.title('Mascarilla Pasa Banda'),plt.xticks([]),plt.yticks([])
+                            plt.subplot(133),plt.imshow(img_back,cmap='gray')
+                            plt.title('Imagen filtrada'),plt.xticks([]),plt.yticks([])
+                            plt.show()
+                        else:
+                            messagebox.showerror(message="El radio PB tiene que ser mayor que el radio PA",title="Error")
+                    else:
+                        messagebox.showerror(message="Los datos ingresados no son númericos",title="Error")
+                ventanaButter2=tk.Tk()
+                ventanaButter2.title("Pasa Bandas Butterworth")
+                miframeButter2=tk.Frame(ventanaButter2)
+                miframeButter2.pack()
+                miframeButter2.config(bg="salmon2",cursor='hand2')
+                #----------------------------PB------------------------------------------------------------------
+                mensajeButter0=tk.Label(miframeButter2,text="Ingresa el valor del radio PB",font=('Arial 15'),bg='salmon2')
+                mensajeButter0.grid(row=0,column=0,padx=10,pady=10)
+                
+                entryButter2 = tk.Entry(miframeButter2,font="Arial 18")
+                entryButter2.grid(row=1,column=0,padx=5,pady=5)
+                entryButter2.config(justify="center")
+                
+                mensajeButter2=tk.Label(miframeButter2,text="Ingresa el orden del filtro PB",font=('Arial 15'),bg='salmon2')
+                mensajeButter2.grid(row=2,column=0,padx=10,pady=10)
+                
+                entry2Butter2 = tk.Entry(miframeButter2,font="Arial 18")
+                entry2Butter2.grid(row=3,column=0,padx=5,pady=5)
+                entry2Butter2.config(justify="center")
+                #-----------------------------PA--------------------------------------------------------------
+                mensajeButter0=tk.Label(miframeButter2,text="Ingresa el valor del radio PA",font=('Arial 15'),bg='salmon2')
+                mensajeButter0.grid(row=0,column=2,padx=10,pady=10)
+                
+                entry3Butter2 = tk.Entry(miframeButter2,font="Arial 18")
+                entry3Butter2.grid(row=1,column=2,padx=5,pady=5)
+                entry3Butter2.config(justify="center")
+                
+                mensajeButter2=tk.Label(miframeButter2,text="Ingresa el orden del filtro PA",font=('Arial 15'),bg='salmon2')
+                mensajeButter2.grid(row=2,column=2,padx=10,pady=10)
+                
+                entry4Butter2 = tk.Entry(miframeButter2,font="Arial 18")
+                entry4Butter2.grid(row=3,column=2,padx=5,pady=5)
+                entry4Butter2.config(justify="center")
+                
+                
+                botonButter2=tk.Button(miframeButter2,text="FILTRAR",font="Arial 20",activebackground="green",command=Butter2)
+                botonButter2.grid(row=4,column=2,padx=5,pady=5)
+                
+                boton3Butter2=tk.Button(miframeButter2,text="BORRAR",font="Arial 20",activebackground="green",command=limpiar)
+                boton3Butter2.grid(row=4,column=1,padx=5,pady=5)
+                
+                boton2Butter2=tk.Button(miframeButter2,text="REGRESAR",font="Arial 20",activebackground="red",command = backButter2)
+                boton2Butter2.grid(row=4,column=0,padx=5,pady=5)
+                ventanaButter2.mainloop()
+            if menuButter.current()==3:
+                def backButter3():
+                    ventanaButter3.destroy()
+                def limpiar3():
+                    entryButter3.delete(0,tk.END)
+                    entry2Butter3.delete(0,tk.END)
+                    entry3Butter3.delete(0,tk.END)
+                    entry4Butter3.delete(0,tk.END)
+                def Butter3():
+                    radio2=entryButter3.get()
+                    orden2=entry2Butter3.get()
+                    radio3=entry3Butter3.get()
+                    orden3=entry4Butter3.get()
+                    if radio2.isnumeric()==True and orden2.isnumeric()==True and radio3.isnumeric()==True and orden3.isnumeric()==True:
+                        radio2 = int(radio2)
+                        orden2 = int(orden2)
+                        radio3 = int(radio3)
+                        orden3 = int(orden3)
+                        if radio2>radio3:
+                            img = cv2.cvtColor(imagen,cv2.COLOR_BGR2GRAY)
+                            f=np.fft.fft2(img)
+                            fshift=np.fft.fftshift(f)
+                            rows,cols=img.shape
+                            crow,ccol=int(rows/2),int(cols/2)
+                            D0=radio2
+                            N=orden2
+                            mask=np.ones((rows,cols))
+                            #Pasa Bajas
+                            for i in range (rows):
+                                for j in range (cols):
+                                    dist=(i-crow)**2+(j-ccol)**2
+                                    mask[i,j]=np.sqrt((1+(dist/D0)**(2*N)))**(-1)
+                            D0=radio3
+                            N=orden3
+                            mask1=np.ones((rows,cols))
+                            #Pasa Altas
+                            for i in range (rows):
+                                for j in range (cols):
+                                    dist=(i-crow)**2+(j-ccol)**2
+                                    if dist==0:
+                                        continue
+                                    mask1[i,j]=np.sqrt((1+(D0/dist)**(2*N)))**(-1)
+                            f_ishift=fshift*mask*mask1
+                            f_shift=np.fft.ifftshift(f_ishift)
+                            img_back=np.fft.ifft2(f_shift)
+                            img_back=np.abs(img_back)
+                            plt.subplot(131),plt.imshow(img,cmap='gray')
+                            plt.title('Original'),plt.xticks([]),plt.yticks([])
+                            plt.subplot(132),plt.imshow(mask,cmap='gray')
+                            plt.title('Mascarilla Rechaza Banda'),plt.xticks([]),plt.yticks([])
+                            plt.subplot(133),plt.imshow(img_back,cmap='gray')
+                            plt.title('Imagen filtrada'),plt.xticks([]),plt.yticks([])
+                            plt.show()
+                        else:
+                            messagebox.showerror(message="El radio PB tiene que ser mayor que el radio PA",title="Error")
+                    else:
+                        messagebox.showerror(message="Los datos ingresados no son númericos",title="Error")
+                ventanaButter3=tk.Tk()
+                ventanaButter3.title("Rechaza Banda Butterworth")
+                miframeButter3=tk.Frame(ventanaButter3)
+                miframeButter3.pack()
+                miframeButter3.config(bg="bisque",cursor='hand2')
+                #----------------------------PB------------------------------------------------------------------
+                mensajeButter0=tk.Label(miframeButter3,text="Ingresa el valor del radio PB",font=('Arial 15'),bg='bisque')
+                mensajeButter0.grid(row=0,column=0,padx=10,pady=10)
+                
+                entryButter3 = tk.Entry(miframeButter3,font="Arial 18")
+                entryButter3.grid(row=1,column=0,padx=5,pady=5)
+                entryButter3.config(justify="center")
+                
+                mensajeButter0=tk.Label(miframeButter3,text="Ingresa el orden del filtro PB",font=('Arial 15'),bg='bisque')
+                mensajeButter0.grid(row=2,column=0,padx=10,pady=10)
+                
+                entry2Butter3 = tk.Entry(miframeButter3,font="Arial 18")
+                entry2Butter3.grid(row=3,column=0,padx=5,pady=5)
+                entry2Butter3.config(justify="center")
+                #-----------------------------PA--------------------------------------------------------------
+                mensajeButter0=tk.Label(miframeButter3,text="Ingresa el valor del radio PA",font=('Arial 15'),bg='bisque')
+                mensajeButter0.grid(row=0,column=2,padx=10,pady=10)
+                
+                entry3Butter3 = tk.Entry(miframeButter3,font="Arial 18")
+                entry3Butter3.grid(row=1,column=2,padx=5,pady=5)
+                entry3Butter3.config(justify="center")
+                
+                mensajeButter2=tk.Label(miframeButter3,text="Ingresa el orden del filtro PA",font=('Arial 15'),bg='bisque')
+                mensajeButter2.grid(row=2,column=2,padx=10,pady=10)
+                
+                entry4Butter3 = tk.Entry(miframeButter3,font="Arial 18")
+                entry4Butter3.grid(row=3,column=2,padx=5,pady=5)
+                entry4Butter3.config(justify="center")
+                
+                
+                botonButter3=tk.Button(miframeButter3,text="FILTRAR",font="Arial 20",activebackground="green",command=Butter3)
+                botonButter3.grid(row=4,column=2,padx=5,pady=5)
+                
+                boton3Butter3=tk.Button(miframeButter3,text="BORRAR",font="Arial 20",activebackground="green",command=limpiar3)
+                boton3Butter3.grid(row=4,column=1,padx=5,pady=5)
+                
+                boton2Butter3=tk.Button(miframeButter3,text="REGRESAR",font="Arial 20",activebackground="red",command = backButter3)
+                boton2Butter3.grid(row=4,column=0,padx=5,pady=5)
+                ventanaButter3.mainloop()
+            else:
+                messagebox.showerror(message="No has seleccionado un comando",title="Error")
+        #-----------------------------BUTTERWORTH-------------------------------------------------------------
+        if menu2.current()==0:
+            ventanaButter=tk.Tk()
+            ventanaButter.title("Filtros Butterworth")
+            miframeButter=tk.Frame(ventanaButter)
+            miframeButter.pack()   
+            miframeButter.config(bg="green3",cursor='hand2')
+            menuButter=ttk.Combobox(miframeButter,font="Arial 20",justify=tk.CENTER,width=35,state="readonly")
+            menuButter.grid(row=1,column=1,padx=15,pady=15)
+            opcionesButter=["Pasa Bajas","Pasa Altas","Pasa Banda","Rechazo de Banda"]
+            menuButter["values"]=opcionesButter
+            botonButter=tk.Button(miframeButter,text="SELECCIONAR",font="Arial 20",activebackground="green",command=FiltroButter)
+            botonButter.grid(row=2,column=1,padx=5,pady=5)
+            botonButter1=tk.Button(miframeButter,text="REGRESAR",font="Arial 20",activebackground="red",command=backButter)
+            botonButter1.grid(row=3,column=1,padx=5,pady=5)
+            ventanaButter.mainloop()
+        else:
+            messagebox.showerror(message="No has seleccionado un comando",title="Error")
 #-------------------------------------------------------------------------------------------
 
     #SEGUNDA VENTANA
@@ -303,7 +654,7 @@ def select():
         menu2.grid(row=1,column=1,padx=15,pady=15)
         opciones3=["Butterworth","Gaussiano"]
         menu2["values"]=opciones3
-        boton7=tk.Button(miframetf,text="SELECCIONAR",font="Arial 20",activebackground="green")
+        boton7=tk.Button(miframetf,text="SELECCIONAR",font="Arial 20",activebackground="green",command=TF)
         boton7.grid(row=2,column=1,padx=5,pady=5)
         boton8=tk.Button(miframetf,text="REGRESAR",font="Arial 20",activebackground="red",command=back2)
         boton8.grid(row=3,column=1,padx=5,pady=5)
