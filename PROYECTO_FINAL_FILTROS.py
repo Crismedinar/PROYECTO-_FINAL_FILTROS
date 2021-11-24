@@ -37,22 +37,27 @@ def select():
                 if num.isnumeric() == True:
                     num = int(num)
                     img = cv2.cvtColor(imagen,cv2.COLOR_BGR2GRAY)
-                    dft=cv2.dft(np.float32(img),flags=cv2.DFT_COMPLEX_OUTPUT)
-                    dft_shift=np.fft.fftshift(dft)
+                    f=np.fft.fft2(img)
+                    fshift=np.fft.fftshift(f)
                     rows,cols=img.shape
                     crow,ccol=int(rows/2),int(cols/2)
-                    mask=np.ones((rows,cols,2), np.uint8)
-                    D= num
-                    mask[crow-D:crow+D, ccol-D:ccol+D]=0 
-                    fshift=dft_shift*mask
-                    f_ishift=np.fft.ifftshift(fshift)
-                    img_back=cv2.idft(f_ishift)
-                    img_back=cv2.magnitude(img_back[:,:,0],img_back[:,:,1])
-                    plt.subplot(121),plt.imshow(img,cmap='gray')
-                    plt.title('Imagen Original'), plt.xticks([]),plt.yticks([])
-                    plt.subplot(122),plt.imshow(img_back,cmap='gray')
-                    plt.title('Imagen Filtrada'), plt.xticks([]),plt.yticks([])
+                    mask=np.ones((rows,cols), np.uint8)
+                    D=num
+                    mask[crow-D:crow+D, ccol-D:ccol+D]=0
+                    f_ishift=fshift*mask
+                    f_shift=np.fft.ifftshift(f_ishift)
+                    img_back=np.fft.ifft2(f_shift)
+                    img_back=np.abs(img_back)
+                    plt.subplot(131),plt.imshow(img, cmap= 'gray')
+                    plt.title('Original'), plt.xticks([]), plt.yticks([])
+                    plt.subplot(132),plt.imshow(mask, cmap= 'gray')
+                    plt.title('Mascarilla'), plt.xticks([]), plt.yticks([])
+                    plt.subplot(133),plt.imshow(img_back,cmap= 'gray')
+                    plt.title('Imagen Filtrada'), plt.xticks([]), plt.yticks([])
                     plt.show()
+                else:
+                    messagebox.showerror(message="Ingresa solo datos numéricos",title="Error")
+
             ventanapbi=tk.Tk()
             ventanapbi.title("PASA BAJAS IDEAL POR TF")
 
@@ -73,6 +78,195 @@ def select():
             boton9=tk.Button(miframepbi,text="REGRESAR",font="Arial 20",activebackground="red",command = regresar1)
             boton9.grid(row=3,column=0,padx=5,pady=5)
             ventanapbi.mainloop()
+        
+        elif menu1.current()==1:
+            def regresar2():
+                ventanapai.destroy() 
+            def Filtro2():
+                num = entry.get()
+                if num.isnumeric() == True:
+                    num = int(num)
+                    img = cv2.cvtColor(imagen,cv2.COLOR_BGR2GRAY)
+                    f=np.fft.fft2(img)
+                    fshift=np.fft.fftshift(f)
+                    rows,cols=img.shape
+                    crow,ccol=int(rows/2),int(cols/2)
+                    mask=np.zeros((rows,cols), np.uint8)
+                    D=num
+                    mask[crow-D:crow+D, ccol-D:ccol+D]=1
+                    f_ishift=fshift*mask
+                    f_shift=np.fft.ifftshift(f_ishift)
+                    img_back=np.fft.ifft2(f_shift)
+                    img_back=np.abs(img_back)
+                    plt.subplot(131),plt.imshow(img, cmap= 'gray')
+                    plt.title('Original'), plt.xticks([]), plt.yticks([])
+                    plt.subplot(132),plt.imshow(mask, cmap= 'gray')
+                    plt.title('Mascarilla'), plt.xticks([]), plt.yticks([])
+                    plt.subplot(133),plt.imshow(img_back,cmap= 'gray')
+                    plt.title('Imagen Filtrada'), plt.xticks([]), plt.yticks([])
+                    plt.show()
+                else:
+                    messagebox.showerror(message="Ingresa solo datos numéricos",title="Error")
+
+            ventanapai=tk.Tk()
+            ventanapai.title("PASA ALTAS IDEAL POR TF")
+
+            miframepbi=tk.Frame(ventanapai)
+            miframepbi.pack()
+            miframepbi.config(bg="green",cursor='hand2')
+            
+            mensaje=tk.Label(miframepbi,text="Ingresa el valor para el radio",font=('Arial 20'),bg='green')
+            mensaje.grid(row=0,column=1,padx=10,pady=10)
+            
+            entry = tk.Entry(miframepbi,font="Arial 18")
+            entry.grid(row=1,column=1,padx=5,pady=5)
+            entry.config(justify="center")
+            
+            boton9=tk.Button(miframepbi,text="FILTRAR",font="Arial 20",activebackground="green",command=Filtro2)
+            boton9.grid(row=3,column=2,padx=5,pady=5)
+            
+            boton9=tk.Button(miframepbi,text="REGRESAR",font="Arial 20",activebackground="red",command = regresar2)
+            boton9.grid(row=3,column=0,padx=5,pady=5)
+            ventanapai.mainloop()
+        
+        elif menu1.current()==2:
+            def regresar3():
+                ventanapbani.destroy() 
+            def Filtro3():
+                num1 = entry1.get()
+                num2 = entry2.get()
+                if (num1.isnumeric()==True) and (num2.isnumeric()==True):
+                    if num1<num2:
+                        num1 = int(num1)
+                        num2 = int(num2)
+                        img = cv2.cvtColor(imagen,cv2.COLOR_BGR2GRAY)
+                        f=np.fft.fft2(img)
+                        fshift=np.fft.fftshift(f)
+                        rows,cols=img.shape
+                        crow,ccol=int(rows/2),int(cols/2)
+                        mask1=np.ones((rows,cols), np.uint8)
+                        D1=num1
+                        mask1[crow-D1:crow+D1, ccol-D1:ccol+D1]=0
+                        mask2=np.zeros((rows,cols), np.uint8)
+                        D2=num2
+                        mask2[crow-D2:crow+D2, ccol-D2:ccol+D2]=1
+                        mask=mask1*mask2
+                        f_ishift=fshift*mask
+                        f_shift=np.fft.ifftshift(f_ishift)
+                        img_back=np.fft.ifft2(f_shift)
+                        img_back=np.abs(img_back)
+                        plt.subplot(131),plt.imshow(img, cmap= 'gray')
+                        plt.title('Original'), plt.xticks([]), plt.yticks([])
+                        plt.subplot(132),plt.imshow(mask, cmap= 'gray')
+                        plt.title('Mascarilla'), plt.xticks([]), plt.yticks([])
+                        plt.subplot(133),plt.imshow(img_back,cmap= 'gray')
+                        plt.title('Imagen Filtrada'), plt.xticks([]), plt.yticks([])
+                        plt.show()
+                    else:
+                        messagebox.showerror(message="El primer dato debe ser menor al segundo",title="Error")
+                else:
+                    messagebox.showerror(message="Ingresa solo datos numéricos",title="Error")
+            
+            ventanapbani=tk.Tk()
+            ventanapbani.title("PASA BANDAS IDEAL POR TF")
+
+            miframepbi=tk.Frame(ventanapbani)
+            miframepbi.pack()
+            miframepbi.config(bg="green",cursor='hand2')
+            
+            mensaje1=tk.Label(miframepbi,text="Ingresa el valor menor para el radio",font=('Arial 20'),bg='green')
+            mensaje1.grid(row=0,column=1,padx=10,pady=10)
+            
+            entry1 = tk.Entry(miframepbi,font="Arial 18")
+            entry1.grid(row=1,column=1,padx=5,pady=5)
+            entry1.config(justify="center")
+
+            mensaje2=tk.Label(miframepbi,text="Ingresa el valor mayor para el radio",font=('Arial 20'),bg='green')
+            mensaje2.grid(row=2,column=1,padx=10,pady=10)
+            
+            entry2 = tk.Entry(miframepbi,font="Arial 18")
+            entry2.grid(row=3,column=1,padx=5,pady=5)
+            entry2.config(justify="center")
+            
+            boton9=tk.Button(miframepbi,text="FILTRAR",font="Arial 20",activebackground="green",command=Filtro3)
+            boton9.grid(row=4,column=2,padx=5,pady=5)
+            
+            boton9=tk.Button(miframepbi,text="REGRESAR",font="Arial 20",activebackground="red",command = regresar3)
+            boton9.grid(row=4,column=0,padx=5,pady=5)
+            ventanapbani.mainloop()
+        
+        elif menu1.current()==3:
+            def regresar4():
+                ventanarbani.destroy() 
+            def Filtro4():
+                num1 = entry1.get()
+                num2 = entry2.get()
+                if (num1.isnumeric()==True) and (num2.isnumeric()==True):
+                    if num1<num2:
+                        num1 = int(num1)
+                        num2 = int(num2)
+                        img = cv2.cvtColor(imagen,cv2.COLOR_BGR2GRAY)
+                        f=np.fft.fft2(img)
+                        fshift=np.fft.fftshift(f)
+                        rows,cols=img.shape
+                        crow,ccol=int(rows/2),int(cols/2)
+                        mask1=np.ones((rows,cols), np.uint8)
+                        D1=num1
+                        mask1[crow-D1:crow+D1, ccol-D1:ccol+D1]=0
+                        mask2=np.zeros((rows,cols), np.uint8)
+                        D2=num2
+                        mask2[crow-D2:crow+D2, ccol-D2:ccol+D2]=1
+                        mask=mask1*mask2
+                        for i in range(crow*2):
+                            for j in range(ccol*2):
+                                if mask[i,j]==0:
+                                    mask[i,j]=1
+                                elif mask[i,j]==1:
+                                    mask[i,j]=0
+                        f_ishift=fshift*mask
+                        f_shift=np.fft.ifftshift(f_ishift)
+                        img_back=np.fft.ifft2(f_shift)
+                        img_back=np.abs(img_back)
+                        plt.subplot(131),plt.imshow(img, cmap= 'gray')
+                        plt.title('Original'), plt.xticks([]), plt.yticks([])
+                        plt.subplot(132),plt.imshow(mask, cmap= 'gray')
+                        plt.title('Mascarilla'), plt.xticks([]), plt.yticks([])
+                        plt.subplot(133),plt.imshow(img_back,cmap= 'gray')
+                        plt.title('Imagen Filtrada'), plt.xticks([]), plt.yticks([])
+                        plt.show()
+                    else:
+                        messagebox.showerror(message="El primer dato debe ser menor al segundo",title="Error")
+                else:
+                    messagebox.showerror(message="Ingresa solo datos numéricos",title="Error")
+            
+            ventanarbani=tk.Tk()
+            ventanarbani.title("PASA BANDAS IDEAL POR TF")
+
+            miframepbi=tk.Frame(ventanarbani)
+            miframepbi.pack()
+            miframepbi.config(bg="green",cursor='hand2')
+            
+            mensaje1=tk.Label(miframepbi,text="Ingresa el valor menor para el radio",font=('Arial 20'),bg='green')
+            mensaje1.grid(row=0,column=1,padx=10,pady=10)
+            
+            entry1 = tk.Entry(miframepbi,font="Arial 18")
+            entry1.grid(row=1,column=1,padx=5,pady=5)
+            entry1.config(justify="center")
+
+            mensaje2=tk.Label(miframepbi,text="Ingresa el valor mayor para el radio",font=('Arial 20'),bg='green')
+            mensaje2.grid(row=2,column=1,padx=10,pady=10)
+            
+            entry2 = tk.Entry(miframepbi,font="Arial 18")
+            entry2.grid(row=3,column=1,padx=5,pady=5)
+            entry2.config(justify="center")
+            
+            boton9=tk.Button(miframepbi,text="FILTRAR",font="Arial 20",activebackground="green",command=Filtro4)
+            boton9.grid(row=4,column=2,padx=5,pady=5)
+            
+            boton9=tk.Button(miframepbi,text="REGRESAR",font="Arial 20",activebackground="red",command = regresar4)
+            boton9.grid(row=4,column=0,padx=5,pady=5)
+            ventanarbani.mainloop()
+
         else:
             messagebox.showerror(message="No has seleccionado un comando",title="Error")
 #-------------------------------------------------------------------------------------------
