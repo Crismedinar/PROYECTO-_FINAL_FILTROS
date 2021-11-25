@@ -293,13 +293,11 @@ def select():
                         crow,ccol=int(rows/2),int(cols/2)
                         D0=radio0
                         N=orden0
-                        mask=np.ones((rows,cols))
+                        mask=np.zeros((rows,cols))
                         for i in range (rows):
                             for j in range (cols):
                                 dist=(i-crow)**2+(j-ccol)**2
-                                if dist==0:
-                                    continue
-                                mask[i,j]=np.sqrt((1+(D0/dist)**(2*N)))**(-1)
+                                mask[i,j]=np.sqrt((1+(dist/D0)**(2*N)))**(-1)
                         f_ishift=fshift*mask
                         f_shift=np.fft.ifftshift(f_ishift)
                         img_back=np.fft.ifft2(f_shift)
@@ -360,7 +358,9 @@ def select():
                         for i in range (rows):
                             for j in range (cols):
                                 dist=(i-crow)**2+(j-ccol)**2
-                                mask[i,j]=np.sqrt((1+(dist/D0)**(2*N)))**(-1)
+                                if dist==0:
+                                    continue
+                                mask[i,j]=np.sqrt((1+(D0/dist)**(2*N)))**(-1)
                         f_ishift=fshift*mask
                         f_shift=np.fft.ifftshift(f_ishift)
                         img_back=np.fft.ifft2(f_shift)
@@ -425,7 +425,7 @@ def select():
                             crow,ccol=int(rows/2),int(cols/2)
                             D0=radio2
                             N=orden2
-                            mask=np.ones((rows,cols))
+                            mask=np.ze((rows,cols))
                             #Pasa Bajas
                             for i in range (rows):
                                 for j in range (cols):
@@ -526,7 +526,7 @@ def select():
                             crow,ccol=int(rows/2),int(cols/2)
                             D0=radio2
                             N=orden2
-                            mask=np.ones((rows,cols))
+                            mask=np.zeros((rows,cols))
                             #Pasa Bajas
                             for i in range (rows):
                                 for j in range (cols):
@@ -619,14 +619,11 @@ def select():
                         rows,cols=img.shape
                         crow,ccol=int(rows/2),int(cols/2)
                         D0=radio0
-                        N=orden0
-                        mask=np.ones((rows,cols))
+                        mask=np.zeros((rows,cols))
                         for i in range (rows):
                             for j in range (cols):
                                 dist=(i-crow)**2+(j-ccol)**2
-                                if dist==0:
-                                    continue
-                                mask[i,j]=np.sqrt((1+(D0/dist)**(2*N)))**(-1)
+                                mask[i,j]=np.exp(-(((dist)**(2))/((2)*((D0)**(2)))))
                         f_ishift=fshift*mask
                         f_shift=np.fft.ifftshift(f_ishift)
                         img_back=np.fft.ifft2(f_shift)
@@ -665,22 +662,21 @@ def select():
                     ventanaGauss1.destroy()
                 def Gauss1():
                     radio1=entryGauss1.get()
-                    orden1=entryGauss1.get()
-                    if radio1.isnumeric() == True and orden1.isnumeric()==True:
+                    if radio1.isnumeric() == True:
                         radio1=int(radio1)
-                        orden1=int(orden1)
                         img = cv2.cvtColor(imagen,cv2.COLOR_BGR2GRAY)
                         f=np.fft.fft2(img) 
                         fshift=np.fft.fftshift(f)
                         rows,cols=img.shape
                         crow,ccol=int(rows/2),int(cols/2)
                         D0=radio1
-                        N=orden1
                         mask=np.ones((rows,cols))
                         for i in range (rows):
                             for j in range (cols):
                                 dist=(i-crow)**2+(j-ccol)**2
-                                mask[i,j]=np.sqrt((1+(dist/D0)**(2*N)))**(-1)
+                                if dist==0:
+                                    continue
+                                mask[i,j]=1-(np.exp(-(((dist)**(2))/((2)*((D0)**(2))))))
                         f_ishift=fshift*mask
                         f_shift=np.fft.ifftshift(f_ishift)
                         img_back=np.fft.ifft2(f_shift)
@@ -706,13 +702,6 @@ def select():
                 entryGauss1.grid(row=1,column=1,padx=5,pady=5)
                 entryGauss1.config(justify="center")
                 
-                mensajeGauss1=tk.Label(miframeGauss1,text="Ingresa el orden del filtro",font=('Arial 20'),bg='purple1')
-                mensajeGauss1.grid(row=2,column=1,padx=10,pady=10)
-                
-                entry2Gauss1 = tk.Entry(miframeGauss1,font="Arial 18")
-                entry2Gauss1.grid(row=3,column=1,padx=5,pady=5)
-                entry2Gauss1.config(justify="center")
-                
                 botonGauss1=tk.Button(miframeGauss1,text="FILTRAR",font="Arial 20",activebackground="green",command=Gauss1)
                 botonGauss1.grid(row=4,column=2,padx=5,pady=5)
                 
@@ -724,19 +713,13 @@ def select():
                     ventanaGauss2.destroy()
                 def limpiar():
                     entryGauss2.delete(0,tk.END)
-                    entry2Gauss2.delete(0,tk.END)
                     entry3Gauss2.delete(0,tk.END)
-                    entry4Gauss2.delete(0,tk.END)
                 def Gauss2():
                     radio2=entryGauss2.get()
-                    orden2=entry2Gauss2.get()
                     radio3=entry3Gauss2.get()
-                    orden3=entry4Gauss2.get()
-                    if radio2.isnumeric()==True and orden2.isnumeric()==True and radio3.isnumeric()==True and orden3.isnumeric()==True:
+                    if radio2.isnumeric()==True and radio3.isnumeric()==True:
                         radio2 = int(radio2)
-                        orden2 = int(orden2)
                         radio3 = int(radio3)
-                        orden3 = int(orden3)
                         if radio2>radio3:
                             img = cv2.cvtColor(imagen,cv2.COLOR_BGR2GRAY)
                             f=np.fft.fft2(img)
@@ -744,24 +727,21 @@ def select():
                             rows,cols=img.shape
                             crow,ccol=int(rows/2),int(cols/2)
                             D0=radio2
-                            N=orden2
-                            mask=np.ones((rows,cols))
-                            #Pasa Bajas
+                            mask1=np.ones((rows,cols))
                             for i in range (rows):
                                 for j in range (cols):
                                     dist=(i-crow)**2+(j-ccol)**2
-                                    mask[i,j]=np.sqrt((1+(dist/D0)**(2*N)))**(-1)
+                                    mask1[i,j]=(np.exp(-(((dist)**(2))/((2)*((D0)**(2))))))
                             D0=radio3
-                            N=orden3
-                            mask1=np.ones((rows,cols))
-                            #Pasa Altas
+                            mask2=np.ones((rows,cols))
                             for i in range (rows):
                                 for j in range (cols):
                                     dist=(i-crow)**2+(j-ccol)**2
                                     if dist==0:
                                         continue
-                                    mask1[i,j]=np.sqrt((1+(D0/dist)**(2*N)))**(-1)
-                            f_ishift=fshift*mask*mask1
+                                    mask2[i,j]=1-(np.exp(-(((dist)**(2))/((2)*((D0)**(2))))))
+                            mask=mask1*mask2
+                            f_ishift=fshift*mask
                             f_shift=np.fft.ifftshift(f_ishift)
                             img_back=np.fft.ifft2(f_shift)
                             img_back=np.abs(img_back)
@@ -789,27 +769,13 @@ def select():
                 entryGauss2.grid(row=1,column=0,padx=5,pady=5)
                 entryGauss2.config(justify="center")
                 
-                mensajeGauss2=tk.Label(miframeGauss2,text="Ingresa el orden del filtro PB",font=('Arial 15'),bg='salmon2')
-                mensajeGauss2.grid(row=2,column=0,padx=10,pady=10)
-                
-                entry2Gauss2 = tk.Entry(miframeGauss2,font="Arial 18")
-                entry2Gauss2.grid(row=3,column=0,padx=5,pady=5)
-                entry2Gauss2.config(justify="center")
                 #-----------------------------PA--------------------------------------------------------------
                 mensajeGauss0=tk.Label(miframeGauss2,text="Ingresa el valor del radio PA",font=('Arial 15'),bg='salmon2')
                 mensajeGauss0.grid(row=0,column=2,padx=10,pady=10)
                 
                 entry3Gauss2 = tk.Entry(miframeGauss2,font="Arial 18")
                 entry3Gauss2.grid(row=1,column=2,padx=5,pady=5)
-                entry3Gauss2.config(justify="center")
-                
-                mensajeGauss2=tk.Label(miframeGauss2,text="Ingresa el orden del filtro PA",font=('Arial 15'),bg='salmon2')
-                mensajeGauss2.grid(row=2,column=2,padx=10,pady=10)
-                
-                entry4Gauss2 = tk.Entry(miframeGauss2,font="Arial 18")
-                entry4Gauss2.grid(row=3,column=2,padx=5,pady=5)
-                entry4Gauss2.config(justify="center")
-                
+                entry3Gauss2.config(justify="center")                
                 
                 botonGauss2=tk.Button(miframeGauss2,text="FILTRAR",font="Arial 20",activebackground="green",command=Gauss2)
                 botonGauss2.grid(row=4,column=2,padx=5,pady=5)
@@ -825,19 +791,13 @@ def select():
                     ventanaGauss3.destroy()
                 def limpiar3():
                     entryGauss3.delete(0,tk.END)
-                    entry2Gauss3.delete(0,tk.END)
                     entry3Gauss3.delete(0,tk.END)
-                    entry4Gauss3.delete(0,tk.END)
                 def Gauss3():
                     radio2=entryGauss3.get()
-                    orden2=entry2Gauss3.get()
                     radio3=entry3Gauss3.get()
-                    orden3=entry4Gauss3.get()
-                    if radio2.isnumeric()==True and orden2.isnumeric()==True and radio3.isnumeric()==True and orden3.isnumeric()==True:
+                    if radio2.isnumeric()==True and radio3.isnumeric()==True:
                         radio2 = int(radio2)
-                        orden2 = int(orden2)
                         radio3 = int(radio3)
-                        orden3 = int(orden3)
                         if radio2>radio3:
                             img = cv2.cvtColor(imagen,cv2.COLOR_BGR2GRAY)
                             f=np.fft.fft2(img)
@@ -845,24 +805,21 @@ def select():
                             rows,cols=img.shape
                             crow,ccol=int(rows/2),int(cols/2)
                             D0=radio2
-                            N=orden2
-                            mask=np.ones((rows,cols))
-                            #Pasa Bajas
+                            mask1=np.ones((rows,cols))
                             for i in range (rows):
                                 for j in range (cols):
                                     dist=(i-crow)**2+(j-ccol)**2
-                                    mask[i,j]=np.sqrt((1+(dist/D0)**(2*N)))**(-1)
+                                    mask1[i,j]=(np.exp(-(((dist)**(2))/((2)*((D0)**(2))))))
                             D0=radio3
-                            N=orden3
-                            mask1=np.ones((rows,cols))
-                            #Pasa Altas
+                            mask2=np.ones((rows,cols))
                             for i in range (rows):
                                 for j in range (cols):
                                     dist=(i-crow)**2+(j-ccol)**2
                                     if dist==0:
                                         continue
-                                    mask1[i,j]=np.sqrt((1+(D0/dist)**(2*N)))**(-1)
-                            f_ishift=fshift*mask*mask1
+                                    mask2[i,j]=1-(np.exp(-(((dist)**(2))/((2)*((D0)**(2))))))
+                            mask=-mask1*mask2
+                            f_ishift=fshift*mask
                             f_shift=np.fft.ifftshift(f_ishift)
                             img_back=np.fft.ifft2(f_shift)
                             img_back=np.abs(img_back)
@@ -890,12 +847,6 @@ def select():
                 entryGauss3.grid(row=1,column=0,padx=5,pady=5)
                 entryGauss3.config(justify="center")
                 
-                mensajeGauss0=tk.Label(miframeGauss3,text="Ingresa el orden del filtro PB",font=('Arial 15'),bg='bisque')
-                mensajeGauss0.grid(row=2,column=0,padx=10,pady=10)
-                
-                entry2Gauss3 = tk.Entry(miframeGauss3,font="Arial 18")
-                entry2Gauss3.grid(row=3,column=0,padx=5,pady=5)
-                entry2Gauss3.config(justify="center")
                 #-----------------------------PA--------------------------------------------------------------
                 mensajeGauss0=tk.Label(miframeGauss3,text="Ingresa el valor del radio PA",font=('Arial 15'),bg='bisque')
                 mensajeGauss0.grid(row=0,column=2,padx=10,pady=10)
@@ -903,14 +854,6 @@ def select():
                 entry3Gauss3 = tk.Entry(miframeGauss3,font="Arial 18")
                 entry3Gauss3.grid(row=1,column=2,padx=5,pady=5)
                 entry3Gauss3.config(justify="center")
-                
-                mensajeGauss2=tk.Label(miframeGauss3,text="Ingresa el orden del filtro PA",font=('Arial 15'),bg='bisque')
-                mensajeGauss2.grid(row=2,column=2,padx=10,pady=10)
-                
-                entry4Gauss3 = tk.Entry(miframeGauss3,font="Arial 18")
-                entry4Gauss3.grid(row=3,column=2,padx=5,pady=5)
-                entry4Gauss3.config(justify="center")
-                
                 
                 botonGauss3=tk.Button(miframeGauss3,text="FILTRAR",font="Arial 20",activebackground="green",command=Gauss3)
                 botonGauss3.grid(row=4,column=2,padx=5,pady=5)
