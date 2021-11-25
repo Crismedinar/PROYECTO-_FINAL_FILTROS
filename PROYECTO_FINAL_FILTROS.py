@@ -39,6 +39,9 @@ def select():
                     img = cv2.cvtColor(imagen,cv2.COLOR_BGR2GRAY)
                     f=np.fft.fft2(img)
                     fshift=np.fft.fftshift(f)
+                    dft = cv2.dft(np.float32(img),flags = cv2.DFT_COMPLEX_OUTPUT)
+                    dft_shift = np.fft.fftshift(dft)
+                    tff= 20*np.log(cv2.magnitude(dft_shift[:,:,0],dft_shift[:,:,1]))
                     rows,cols=img.shape
                     crow,ccol=int(rows/2),int(cols/2)
                     mask=np.ones((rows,cols), np.uint8)
@@ -48,11 +51,13 @@ def select():
                     f_shift=np.fft.ifftshift(f_ishift)
                     img_back=np.fft.ifft2(f_shift)
                     img_back=np.abs(img_back)
-                    plt.subplot(131),plt.imshow(img, cmap= 'gray')
+                    plt.subplot(221),plt.imshow(img, cmap= 'gray')
                     plt.title('Original'), plt.xticks([]), plt.yticks([])
-                    plt.subplot(132),plt.imshow(mask, cmap= 'gray')
+                    plt.subplot(222),plt.imshow(tff, cmap= 'gray')
+                    plt.title('Transformada'), plt.xticks([]), plt.yticks([])
+                    plt.subplot(223),plt.imshow(mask, cmap= 'gray')
                     plt.title('Mascarilla'), plt.xticks([]), plt.yticks([])
-                    plt.subplot(133),plt.imshow(img_back,cmap= 'gray')
+                    plt.subplot(224),plt.imshow(img_back,cmap= 'gray')
                     plt.title('Imagen Filtrada'), plt.xticks([]), plt.yticks([])
                     plt.show()
                 else:
@@ -89,6 +94,9 @@ def select():
                     img = cv2.cvtColor(imagen,cv2.COLOR_BGR2GRAY)
                     f=np.fft.fft2(img)
                     fshift=np.fft.fftshift(f)
+                    dft = cv2.dft(np.float32(img),flags = cv2.DFT_COMPLEX_OUTPUT)
+                    dft_shift = np.fft.fftshift(dft)
+                    tff= 20*np.log(cv2.magnitude(dft_shift[:,:,0],dft_shift[:,:,1]))
                     rows,cols=img.shape
                     crow,ccol=int(rows/2),int(cols/2)
                     mask=np.zeros((rows,cols), np.uint8)
@@ -98,11 +106,13 @@ def select():
                     f_shift=np.fft.ifftshift(f_ishift)
                     img_back=np.fft.ifft2(f_shift)
                     img_back=np.abs(img_back)
-                    plt.subplot(131),plt.imshow(img, cmap= 'gray')
+                    plt.subplot(221),plt.imshow(img, cmap= 'gray')
                     plt.title('Original'), plt.xticks([]), plt.yticks([])
-                    plt.subplot(132),plt.imshow(mask, cmap= 'gray')
+                    plt.subplot(222),plt.imshow(tff, cmap= 'gray')
+                    plt.title('Transformada'), plt.xticks([]), plt.yticks([])
+                    plt.subplot(223),plt.imshow(mask, cmap= 'gray')
                     plt.title('Mascarilla'), plt.xticks([]), plt.yticks([])
-                    plt.subplot(133),plt.imshow(img_back,cmap= 'gray')
+                    plt.subplot(224),plt.imshow(img_back,cmap= 'gray')
                     plt.title('Imagen Filtrada'), plt.xticks([]), plt.yticks([])
                     plt.show()
                 else:
@@ -144,6 +154,9 @@ def select():
                         img = cv2.cvtColor(imagen,cv2.COLOR_BGR2GRAY)
                         f=np.fft.fft2(img)
                         fshift=np.fft.fftshift(f)
+                        dft = cv2.dft(np.float32(img),flags = cv2.DFT_COMPLEX_OUTPUT)
+                        dft_shift = np.fft.fftshift(dft)
+                        tff= 20*np.log(cv2.magnitude(dft_shift[:,:,0],dft_shift[:,:,1]))
                         rows,cols=img.shape
                         crow,ccol=int(rows/2),int(cols/2)
                         mask1=np.ones((rows,cols), np.uint8)
@@ -157,11 +170,13 @@ def select():
                         f_shift=np.fft.ifftshift(f_ishift)
                         img_back=np.fft.ifft2(f_shift)
                         img_back=np.abs(img_back)
-                        plt.subplot(131),plt.imshow(img, cmap= 'gray')
+                        plt.subplot(221),plt.imshow(img, cmap= 'gray')
                         plt.title('Original'), plt.xticks([]), plt.yticks([])
-                        plt.subplot(132),plt.imshow(mask, cmap= 'gray')
+                        plt.subplot(222),plt.imshow(tff, cmap= 'gray')
+                        plt.title('Transformada'), plt.xticks([]), plt.yticks([])
+                        plt.subplot(223),plt.imshow(mask, cmap= 'gray')
                         plt.title('Mascarilla'), plt.xticks([]), plt.yticks([])
-                        plt.subplot(133),plt.imshow(img_back,cmap= 'gray')
+                        plt.subplot(224),plt.imshow(img_back,cmap= 'gray')
                         plt.title('Imagen Filtrada'), plt.xticks([]), plt.yticks([])
                         plt.show()
                     else:
@@ -212,6 +227,9 @@ def select():
                         img = cv2.cvtColor(imagen,cv2.COLOR_BGR2GRAY)
                         f=np.fft.fft2(img)
                         fshift=np.fft.fftshift(f)
+                        dft = cv2.dft(np.float32(img),flags = cv2.DFT_COMPLEX_OUTPUT)
+                        dft_shift = np.fft.fftshift(dft)
+                        tff= 20*np.log(cv2.magnitude(dft_shift[:,:,0],dft_shift[:,:,1]))
                         rows,cols=img.shape
                         crow,ccol=int(rows/2),int(cols/2)
                         mask1=np.ones((rows,cols), np.uint8)
@@ -231,33 +249,35 @@ def select():
                         f_shift=np.fft.ifftshift(f_ishift)
                         img_back=np.fft.ifft2(f_shift)
                         img_back=np.abs(img_back)
-                        plt.subplot(131),plt.imshow(img, cmap= 'gray')
+                        plt.subplot(221),plt.imshow(img, cmap= 'gray')
                         plt.title('Original'), plt.xticks([]), plt.yticks([])
-                        plt.subplot(132),plt.imshow(mask, cmap= 'gray')
+                        plt.subplot(222),plt.imshow(tff, cmap= 'gray')
+                        plt.title('Transformada'), plt.xticks([]), plt.yticks([])
+                        plt.subplot(223),plt.imshow(mask, cmap= 'gray')
                         plt.title('Mascarilla'), plt.xticks([]), plt.yticks([])
-                        plt.subplot(133),plt.imshow(img_back,cmap= 'gray')
+                        plt.subplot(224),plt.imshow(img_back,cmap= 'gray')
                         plt.title('Imagen Filtrada'), plt.xticks([]), plt.yticks([])
                         plt.show()
                     else:
-                        messagebox.showerror(message="El radio PB tiene que ser mayor que el radio PA",title="Error")
+                        messagebox.showerror(message="El radio PA tiene que ser mayor que el radio PB",title="Error")
                 else:
                     messagebox.showerror(message="Ingresa solo datos numéricos",title="Error")
             
             ventanarbani=tk.Tk()
-            ventanarbani.title("PASA BANDAS IDEAL POR TF")
+            ventanarbani.title("RECHAZO DE BANDA IDEAL POR TF")
 
             miframepbi=tk.Frame(ventanarbani)
             miframepbi.pack()
             miframepbi.config(bg="green",cursor='hand2')
             
-            mensaje1=tk.Label(miframepbi,text="Ingresa el valor del radio PA",font=('Arial 20'),bg='green')
+            mensaje1=tk.Label(miframepbi,text="Ingresa el valor del radio PB",font=('Arial 20'),bg='green')
             mensaje1.grid(row=0,column=1,padx=10,pady=10)
             
             entry1 = tk.Entry(miframepbi,font="Arial 18")
             entry1.grid(row=1,column=1,padx=5,pady=5)
             entry1.config(justify="center")
 
-            mensaje2=tk.Label(miframepbi,text="Ingresa el valor del radio PB",font=('Arial 20'),bg='green')
+            mensaje2=tk.Label(miframepbi,text="Ingresa el valor del radio PA",font=('Arial 20'),bg='green')
             mensaje2.grid(row=2,column=1,padx=10,pady=10)
             
             entry2 = tk.Entry(miframepbi,font="Arial 18")
@@ -289,6 +309,9 @@ def select():
                         img = cv2.cvtColor(imagen,cv2.COLOR_BGR2GRAY)
                         f=np.fft.fft2(img) 
                         fshift=np.fft.fftshift(f)
+                        dft = cv2.dft(np.float32(img),flags = cv2.DFT_COMPLEX_OUTPUT)
+                        dft_shift = np.fft.fftshift(dft)
+                        tff= 20*np.log(cv2.magnitude(dft_shift[:,:,0],dft_shift[:,:,1]))
                         rows,cols=img.shape
                         crow,ccol=int(rows/2),int(cols/2)
                         D0=radio0
@@ -302,17 +325,19 @@ def select():
                         f_shift=np.fft.ifftshift(f_ishift)
                         img_back=np.fft.ifft2(f_shift)
                         img_back=np.abs(img_back)
-                        plt.subplot(131),plt.imshow(img,cmap='gray')
-                        plt.title('Original'),plt.xticks([]),plt.yticks([])
-                        plt.subplot(132),plt.imshow(mask,cmap='gray')
-                        plt.title('Mascarilla'),plt.xticks([]),plt.yticks([])
-                        plt.subplot(133),plt.imshow(img_back,cmap='gray')
-                        plt.title('Imagen filtrada'),plt.xticks([]),plt.yticks([])
+                        plt.subplot(221),plt.imshow(img, cmap= 'gray')
+                        plt.title('Original'), plt.xticks([]), plt.yticks([])
+                        plt.subplot(222),plt.imshow(tff, cmap= 'gray')
+                        plt.title('Transformada'), plt.xticks([]), plt.yticks([])
+                        plt.subplot(223),plt.imshow(mask, cmap= 'gray')
+                        plt.title('Mascarilla'), plt.xticks([]), plt.yticks([])
+                        plt.subplot(224),plt.imshow(img_back,cmap= 'gray')
+                        plt.title('Imagen Filtrada'), plt.xticks([]), plt.yticks([])
                         plt.show()
                     else:
                         messagebox.showerror(message="Los datos ingresados no son númericos",title="Error")
                 ventanaButter0=tk.Tk()
-                ventanaButter0.title("Butter Pasa Bajas")
+                ventanaButter0.title("Pasa Bajas Butterworth")
                 miframeButter0=tk.Frame(ventanaButter0)
                 miframeButter0.pack()
                 miframeButter0.config(bg="green",cursor='hand2')
@@ -350,6 +375,9 @@ def select():
                         img = cv2.cvtColor(imagen,cv2.COLOR_BGR2GRAY)
                         f=np.fft.fft2(img) 
                         fshift=np.fft.fftshift(f)
+                        dft = cv2.dft(np.float32(img),flags = cv2.DFT_COMPLEX_OUTPUT)
+                        dft_shift = np.fft.fftshift(dft)
+                        tff= 20*np.log(cv2.magnitude(dft_shift[:,:,0],dft_shift[:,:,1]))
                         rows,cols=img.shape
                         crow,ccol=int(rows/2),int(cols/2)
                         D0=radio1
@@ -365,17 +393,19 @@ def select():
                         f_shift=np.fft.ifftshift(f_ishift)
                         img_back=np.fft.ifft2(f_shift)
                         img_back=np.abs(img_back)
-                        plt.subplot(131),plt.imshow(img,cmap='gray')
-                        plt.title('Original'),plt.xticks([]),plt.yticks([])
-                        plt.subplot(132),plt.imshow(mask,cmap='gray')
-                        plt.title('Mascarilla'),plt.xticks([]),plt.yticks([])
-                        plt.subplot(133),plt.imshow(img_back,cmap='gray')
-                        plt.title('Imagen filtrada'),plt.xticks([]),plt.yticks([])
+                        plt.subplot(221),plt.imshow(img, cmap= 'gray')
+                        plt.title('Original'), plt.xticks([]), plt.yticks([])
+                        plt.subplot(222),plt.imshow(tff, cmap= 'gray')
+                        plt.title('Transformada'), plt.xticks([]), plt.yticks([])
+                        plt.subplot(223),plt.imshow(mask, cmap= 'gray')
+                        plt.title('Mascarilla'), plt.xticks([]), plt.yticks([])
+                        plt.subplot(224),plt.imshow(img_back,cmap= 'gray')
+                        plt.title('Imagen Filtrada'), plt.xticks([]), plt.yticks([])
                         plt.show()
                     else:
                         messagebox.showerror(message="Los datos ingresados no son númericos",title="Error")
                 ventanaButter1=tk.Tk()
-                ventanaButter1.title("Butter Pasa Altas")
+                ventanaButter1.title("Pasa Altas Butterworth")
                 miframeButter1=tk.Frame(ventanaButter1)
                 miframeButter1.pack()
                 miframeButter1.config(bg="purple1",cursor='hand2')
@@ -421,36 +451,40 @@ def select():
                             img = cv2.cvtColor(imagen,cv2.COLOR_BGR2GRAY)
                             f=np.fft.fft2(img)
                             fshift=np.fft.fftshift(f)
+                            dft = cv2.dft(np.float32(img),flags = cv2.DFT_COMPLEX_OUTPUT)
+                            dft_shift = np.fft.fftshift(dft)
+                            tff= 20*np.log(cv2.magnitude(dft_shift[:,:,0],dft_shift[:,:,1]))
                             rows,cols=img.shape
                             crow,ccol=int(rows/2),int(cols/2)
                             D0=radio2
                             N=orden2
-                            mask=np.ze((rows,cols))
-                            #Pasa Bajas
+                            mask1=np.zeros((rows,cols))
                             for i in range (rows):
                                 for j in range (cols):
                                     dist=(i-crow)**2+(j-ccol)**2
-                                    mask[i,j]=np.sqrt((1+(dist/D0)**(2*N)))**(-1)
+                                    mask1[i,j]=np.sqrt((1+(dist/D0)**(2*N)))**(-1)
                             D0=radio3
                             N=orden3
-                            mask1=np.ones((rows,cols))
-                            #Pasa Altas
+                            mask2=np.ones((rows,cols))
                             for i in range (rows):
                                 for j in range (cols):
                                     dist=(i-crow)**2+(j-ccol)**2
                                     if dist==0:
                                         continue
-                                    mask1[i,j]=np.sqrt((1+(D0/dist)**(2*N)))**(-1)
-                            f_ishift=fshift*mask*mask1
+                                    mask2[i,j]=np.sqrt((1+(D0/dist)**(2*N)))**(-1)
+                            mask=mask1*mask2
+                            f_ishift=fshift*mask
                             f_shift=np.fft.ifftshift(f_ishift)
                             img_back=np.fft.ifft2(f_shift)
                             img_back=np.abs(img_back)
-                            plt.subplot(131),plt.imshow(img,cmap='gray')
-                            plt.title('Original'),plt.xticks([]),plt.yticks([])
-                            plt.subplot(132),plt.imshow(mask,cmap='gray')
-                            plt.title('Mascarilla Pasa Banda'),plt.xticks([]),plt.yticks([])
-                            plt.subplot(133),plt.imshow(img_back,cmap='gray')
-                            plt.title('Imagen filtrada'),plt.xticks([]),plt.yticks([])
+                            plt.subplot(221),plt.imshow(img, cmap= 'gray')
+                            plt.title('Original'), plt.xticks([]), plt.yticks([])
+                            plt.subplot(222),plt.imshow(tff, cmap= 'gray')
+                            plt.title('Transformada'), plt.xticks([]), plt.yticks([])
+                            plt.subplot(223),plt.imshow(mask, cmap= 'gray')
+                            plt.title('Mascarilla'), plt.xticks([]), plt.yticks([])
+                            plt.subplot(224),plt.imshow(img_back,cmap= 'gray')
+                            plt.title('Imagen Filtrada'), plt.xticks([]), plt.yticks([])
                             plt.show()
                         else:
                             messagebox.showerror(message="El radio PB tiene que ser mayor que el radio PA",title="Error")
@@ -522,39 +556,43 @@ def select():
                             img = cv2.cvtColor(imagen,cv2.COLOR_BGR2GRAY)
                             f=np.fft.fft2(img)
                             fshift=np.fft.fftshift(f)
+                            dft = cv2.dft(np.float32(img),flags = cv2.DFT_COMPLEX_OUTPUT)
+                            dft_shift = np.fft.fftshift(dft)
+                            tff= 20*np.log(cv2.magnitude(dft_shift[:,:,0],dft_shift[:,:,1]))
                             rows,cols=img.shape
                             crow,ccol=int(rows/2),int(cols/2)
                             D0=radio2
                             N=orden2
-                            mask=np.zeros((rows,cols))
-                            #Pasa Bajas
+                            mask1=np.zeros((rows,cols))
                             for i in range (rows):
                                 for j in range (cols):
                                     dist=(i-crow)**2+(j-ccol)**2
-                                    mask[i,j]=np.sqrt((1+(dist/D0)**(2*N)))**(-1)
+                                    mask1[i,j]=np.sqrt((1+(dist/D0)**(2*N)))**(-1)
                             D0=radio3
                             N=orden3
-                            mask1=np.ones((rows,cols))
-                            #Pasa Altas
+                            mask2=np.ones((rows,cols))
                             for i in range (rows):
                                 for j in range (cols):
                                     dist=(i-crow)**2+(j-ccol)**2
                                     if dist==0:
                                         continue
-                                    mask1[i,j]=np.sqrt((1+(D0/dist)**(2*N)))**(-1)
-                            f_ishift=fshift*mask*mask1
+                                    mask2[i,j]=np.sqrt((1+(D0/dist)**(2*N)))**(-1)
+                            mask=-mask1*mask2
+                            f_ishift=fshift*mask
                             f_shift=np.fft.ifftshift(f_ishift)
                             img_back=np.fft.ifft2(f_shift)
                             img_back=np.abs(img_back)
-                            plt.subplot(131),plt.imshow(img,cmap='gray')
-                            plt.title('Original'),plt.xticks([]),plt.yticks([])
-                            plt.subplot(132),plt.imshow(mask,cmap='gray')
-                            plt.title('Mascarilla Rechaza Banda'),plt.xticks([]),plt.yticks([])
-                            plt.subplot(133),plt.imshow(img_back,cmap='gray')
-                            plt.title('Imagen filtrada'),plt.xticks([]),plt.yticks([])
+                            plt.subplot(221),plt.imshow(img, cmap= 'gray')
+                            plt.title('Original'), plt.xticks([]), plt.yticks([])
+                            plt.subplot(222),plt.imshow(tff, cmap= 'gray')
+                            plt.title('Transformada'), plt.xticks([]), plt.yticks([])
+                            plt.subplot(223),plt.imshow(mask, cmap= 'gray')
+                            plt.title('Mascarilla'), plt.xticks([]), plt.yticks([])
+                            plt.subplot(224),plt.imshow(img_back,cmap= 'gray')
+                            plt.title('Imagen Filtrada'), plt.xticks([]), plt.yticks([])
                             plt.show()
                         else:
-                            messagebox.showerror(message="El radio PB tiene que ser mayor que el radio PA",title="Error")
+                            messagebox.showerror(message="El radio PA tiene que ser mayor que el radio PB",title="Error")
                     else:
                         messagebox.showerror(message="Los datos ingresados no son númericos",title="Error")
                 ventanaButter3=tk.Tk()
@@ -563,28 +601,28 @@ def select():
                 miframeButter3.pack()
                 miframeButter3.config(bg="bisque",cursor='hand2')
                 #----------------------------PB------------------------------------------------------------------
-                mensajeButter0=tk.Label(miframeButter3,text="Ingresa el valor del radio PB",font=('Arial 15'),bg='bisque')
+                mensajeButter0=tk.Label(miframeButter3,text="Ingresa el valor del radio PA",font=('Arial 15'),bg='bisque')
                 mensajeButter0.grid(row=0,column=0,padx=10,pady=10)
                 
                 entryButter3 = tk.Entry(miframeButter3,font="Arial 18")
                 entryButter3.grid(row=1,column=0,padx=5,pady=5)
                 entryButter3.config(justify="center")
                 
-                mensajeButter0=tk.Label(miframeButter3,text="Ingresa el orden del filtro PB",font=('Arial 15'),bg='bisque')
+                mensajeButter0=tk.Label(miframeButter3,text="Ingresa el orden del filtro PA",font=('Arial 15'),bg='bisque')
                 mensajeButter0.grid(row=2,column=0,padx=10,pady=10)
                 
                 entry2Butter3 = tk.Entry(miframeButter3,font="Arial 18")
                 entry2Butter3.grid(row=3,column=0,padx=5,pady=5)
                 entry2Butter3.config(justify="center")
                 #-----------------------------PA--------------------------------------------------------------
-                mensajeButter0=tk.Label(miframeButter3,text="Ingresa el valor del radio PA",font=('Arial 15'),bg='bisque')
+                mensajeButter0=tk.Label(miframeButter3,text="Ingresa el valor del radio PB",font=('Arial 15'),bg='bisque')
                 mensajeButter0.grid(row=0,column=2,padx=10,pady=10)
                 
                 entry3Butter3 = tk.Entry(miframeButter3,font="Arial 18")
                 entry3Butter3.grid(row=1,column=2,padx=5,pady=5)
                 entry3Butter3.config(justify="center")
                 
-                mensajeButter2=tk.Label(miframeButter3,text="Ingresa el orden del filtro PA",font=('Arial 15'),bg='bisque')
+                mensajeButter2=tk.Label(miframeButter3,text="Ingresa el orden del filtro PB",font=('Arial 15'),bg='bisque')
                 mensajeButter2.grid(row=2,column=2,padx=10,pady=10)
                 
                 entry4Butter3 = tk.Entry(miframeButter3,font="Arial 18")
@@ -616,6 +654,9 @@ def select():
                         img = cv2.cvtColor(imagen,cv2.COLOR_BGR2GRAY)
                         f=np.fft.fft2(img) 
                         fshift=np.fft.fftshift(f)
+                        dft = cv2.dft(np.float32(img),flags = cv2.DFT_COMPLEX_OUTPUT)
+                        dft_shift = np.fft.fftshift(dft)
+                        tff= 20*np.log(cv2.magnitude(dft_shift[:,:,0],dft_shift[:,:,1]))
                         rows,cols=img.shape
                         crow,ccol=int(rows/2),int(cols/2)
                         D0=radio0
@@ -628,17 +669,19 @@ def select():
                         f_shift=np.fft.ifftshift(f_ishift)
                         img_back=np.fft.ifft2(f_shift)
                         img_back=np.abs(img_back)
-                        plt.subplot(131),plt.imshow(img,cmap='gray')
-                        plt.title('Original'),plt.xticks([]),plt.yticks([])
-                        plt.subplot(132),plt.imshow(mask,cmap='gray')
-                        plt.title('Mascarilla'),plt.xticks([]),plt.yticks([])
-                        plt.subplot(133),plt.imshow(img_back,cmap='gray')
-                        plt.title('Imagen filtrada'),plt.xticks([]),plt.yticks([])
+                        plt.subplot(221),plt.imshow(img, cmap= 'gray')
+                        plt.title('Original'), plt.xticks([]), plt.yticks([])
+                        plt.subplot(222),plt.imshow(tff, cmap= 'gray')
+                        plt.title('Transformada'), plt.xticks([]), plt.yticks([])
+                        plt.subplot(223),plt.imshow(mask, cmap= 'gray')
+                        plt.title('Mascarilla'), plt.xticks([]), plt.yticks([])
+                        plt.subplot(224),plt.imshow(img_back,cmap= 'gray')
+                        plt.title('Imagen Filtrada'), plt.xticks([]), plt.yticks([])
                         plt.show()
                     else:
                         messagebox.showerror(message="Los datos ingresados no son númericos",title="Error")
                 ventanaGauss0=tk.Tk()
-                ventanaGauss0.title("Butter Pasa Bajas")
+                ventanaGauss0.title("Pasa Bajas Gaussiano")
                 miframeGauss0=tk.Frame(ventanaGauss0)
                 miframeGauss0.pack()
                 miframeGauss0.config(bg="green",cursor='hand2')
@@ -667,6 +710,9 @@ def select():
                         img = cv2.cvtColor(imagen,cv2.COLOR_BGR2GRAY)
                         f=np.fft.fft2(img) 
                         fshift=np.fft.fftshift(f)
+                        dft = cv2.dft(np.float32(img),flags = cv2.DFT_COMPLEX_OUTPUT)
+                        dft_shift = np.fft.fftshift(dft)
+                        tff= 20*np.log(cv2.magnitude(dft_shift[:,:,0],dft_shift[:,:,1]))
                         rows,cols=img.shape
                         crow,ccol=int(rows/2),int(cols/2)
                         D0=radio1
@@ -681,17 +727,19 @@ def select():
                         f_shift=np.fft.ifftshift(f_ishift)
                         img_back=np.fft.ifft2(f_shift)
                         img_back=np.abs(img_back)
-                        plt.subplot(131),plt.imshow(img,cmap='gray')
-                        plt.title('Original'),plt.xticks([]),plt.yticks([])
-                        plt.subplot(132),plt.imshow(mask,cmap='gray')
-                        plt.title('Mascarilla'),plt.xticks([]),plt.yticks([])
-                        plt.subplot(133),plt.imshow(img_back,cmap='gray')
-                        plt.title('Imagen filtrada'),plt.xticks([]),plt.yticks([])
+                        plt.subplot(221),plt.imshow(img, cmap= 'gray')
+                        plt.title('Original'), plt.xticks([]), plt.yticks([])
+                        plt.subplot(222),plt.imshow(tff, cmap= 'gray')
+                        plt.title('Transformada'), plt.xticks([]), plt.yticks([])
+                        plt.subplot(223),plt.imshow(mask, cmap= 'gray')
+                        plt.title('Mascarilla'), plt.xticks([]), plt.yticks([])
+                        plt.subplot(224),plt.imshow(img_back,cmap= 'gray')
+                        plt.title('Imagen Filtrada'), plt.xticks([]), plt.yticks([])
                         plt.show()
                     else:
                         messagebox.showerror(message="Los datos ingresados no son númericos",title="Error")
                 ventanaGauss1=tk.Tk()
-                ventanaGauss1.title("Butter Pasa Altas")
+                ventanaGauss1.title("Pasa Altas Gaussiano")
                 miframeGauss1=tk.Frame(ventanaGauss1)
                 miframeGauss1.pack()
                 miframeGauss1.config(bg="purple1",cursor='hand2')
@@ -724,6 +772,9 @@ def select():
                             img = cv2.cvtColor(imagen,cv2.COLOR_BGR2GRAY)
                             f=np.fft.fft2(img)
                             fshift=np.fft.fftshift(f)
+                            dft = cv2.dft(np.float32(img),flags = cv2.DFT_COMPLEX_OUTPUT)
+                            dft_shift = np.fft.fftshift(dft)
+                            tff= 20*np.log(cv2.magnitude(dft_shift[:,:,0],dft_shift[:,:,1]))
                             rows,cols=img.shape
                             crow,ccol=int(rows/2),int(cols/2)
                             D0=radio2
@@ -745,19 +796,21 @@ def select():
                             f_shift=np.fft.ifftshift(f_ishift)
                             img_back=np.fft.ifft2(f_shift)
                             img_back=np.abs(img_back)
-                            plt.subplot(131),plt.imshow(img,cmap='gray')
-                            plt.title('Original'),plt.xticks([]),plt.yticks([])
-                            plt.subplot(132),plt.imshow(mask,cmap='gray')
-                            plt.title('Mascarilla Pasa Banda'),plt.xticks([]),plt.yticks([])
-                            plt.subplot(133),plt.imshow(img_back,cmap='gray')
-                            plt.title('Imagen filtrada'),plt.xticks([]),plt.yticks([])
+                            plt.subplot(221),plt.imshow(img, cmap= 'gray')
+                            plt.title('Original'), plt.xticks([]), plt.yticks([])
+                            plt.subplot(222),plt.imshow(tff, cmap= 'gray')
+                            plt.title('Transformada'), plt.xticks([]), plt.yticks([])
+                            plt.subplot(223),plt.imshow(mask, cmap= 'gray')
+                            plt.title('Mascarilla'), plt.xticks([]), plt.yticks([])
+                            plt.subplot(224),plt.imshow(img_back,cmap= 'gray')
+                            plt.title('Imagen Filtrada'), plt.xticks([]), plt.yticks([])
                             plt.show()
                         else:
                             messagebox.showerror(message="El radio PB tiene que ser mayor que el radio PA",title="Error")
                     else:
                         messagebox.showerror(message="Los datos ingresados no son númericos",title="Error")
                 ventanaGauss2=tk.Tk()
-                ventanaGauss2.title("Pasa Bandas Butterworth")
+                ventanaGauss2.title("Pasa Bandas Gaussiano")
                 miframeGauss2=tk.Frame(ventanaGauss2)
                 miframeGauss2.pack()
                 miframeGauss2.config(bg="salmon2",cursor='hand2')
@@ -802,6 +855,9 @@ def select():
                             img = cv2.cvtColor(imagen,cv2.COLOR_BGR2GRAY)
                             f=np.fft.fft2(img)
                             fshift=np.fft.fftshift(f)
+                            dft = cv2.dft(np.float32(img),flags = cv2.DFT_COMPLEX_OUTPUT)
+                            dft_shift = np.fft.fftshift(dft)
+                            tff= 20*np.log(cv2.magnitude(dft_shift[:,:,0],dft_shift[:,:,1]))
                             rows,cols=img.shape
                             crow,ccol=int(rows/2),int(cols/2)
                             D0=radio2
@@ -823,19 +879,21 @@ def select():
                             f_shift=np.fft.ifftshift(f_ishift)
                             img_back=np.fft.ifft2(f_shift)
                             img_back=np.abs(img_back)
-                            plt.subplot(131),plt.imshow(img,cmap='gray')
-                            plt.title('Original'),plt.xticks([]),plt.yticks([])
-                            plt.subplot(132),plt.imshow(mask,cmap='gray')
-                            plt.title('Mascarilla Rechaza Banda'),plt.xticks([]),plt.yticks([])
-                            plt.subplot(133),plt.imshow(img_back,cmap='gray')
-                            plt.title('Imagen filtrada'),plt.xticks([]),plt.yticks([])
+                            plt.subplot(221),plt.imshow(img, cmap= 'gray')
+                            plt.title('Original'), plt.xticks([]), plt.yticks([])
+                            plt.subplot(222),plt.imshow(tff, cmap= 'gray')
+                            plt.title('Transformada'), plt.xticks([]), plt.yticks([])
+                            plt.subplot(223),plt.imshow(mask, cmap= 'gray')
+                            plt.title('Mascarilla'), plt.xticks([]), plt.yticks([])
+                            plt.subplot(224),plt.imshow(img_back,cmap= 'gray')
+                            plt.title('Imagen Filtrada'), plt.xticks([]), plt.yticks([])
                             plt.show()
                         else:
                             messagebox.showerror(message="El radio PB tiene que ser mayor que el radio PA",title="Error")
                     else:
                         messagebox.showerror(message="Los datos ingresados no son númericos",title="Error")
                 ventanaGauss3=tk.Tk()
-                ventanaGauss3.title("Rechaza Banda Butterworth")
+                ventanaGauss3.title("Rechaza Banda Gaussiano")
                 miframeGauss3=tk.Frame(ventanaGauss3)
                 miframeGauss3.pack()
                 miframeGauss3.config(bg="bisque",cursor='hand2')
