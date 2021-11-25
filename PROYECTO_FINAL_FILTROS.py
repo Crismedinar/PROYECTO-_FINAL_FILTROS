@@ -153,7 +153,8 @@ def select():
             def regresar3():
                 ventanapbani.destroy()
             def limpiar3():
-                entry.delete(0,tk.END)
+                entry1.delete(0,tk.END)
+                entry2.delete(0,tk.END)
             def Filtro3():
                 num1 = entry1.get()
                 num2 = entry2.get()
@@ -231,7 +232,8 @@ def select():
             def regresar4():
                 ventanarbani.destroy()
             def limpiar4():
-                entry.delete(0,tk.END)
+                entry1.delete(0,tk.END)
+                entry2.delete(0,tk.END)
             def Filtro4():
                 num1 = entry1.get()
                 num2 = entry2.get()
@@ -318,6 +320,9 @@ def select():
             ventanaButter.destroy()
         def FiltroButter():
             if menuButter.current()==0:
+                def limpiar5():
+                    entryButter0.delete(0,tk.END)
+                    entry2Butter0.delete(0,tk.END)  
                 def backButter0():
                     ventanaButter0.destroy()
                 def Butter0():
@@ -379,11 +384,17 @@ def select():
                 botonButter0=tk.Button(miframeButter0,text="FILTRAR",font="Arial 20",activebackground="green",command=Butter0)
                 botonButter0.grid(row=4,column=2,padx=5,pady=5)
                 
+                boton3Butter0=tk.Button(miframeButter0,text="BORRAR",font="Arial 20",activebackground="green",command =limpiar5)
+                boton3Butter0.grid(row=4,column=1,padx=5,pady=5)
+                
                 boton2Butter0=tk.Button(miframeButter0,text="REGRESAR",font="Arial 20",activebackground="red",command = backButter0)
                 boton2Butter0.grid(row=4,column=0,padx=5,pady=5)
                 ventanaButter0.mainloop()
                 
             elif menuButter.current()==1:
+                def limpiar5():
+                    entryButter1.delete(0,tk.END)
+                    entry2Butter1.delete(0,tk.END)  
                 def backButter1():
                     ventanaButter1.destroy()
                 def Butter1():
@@ -445,6 +456,9 @@ def select():
                 
                 botonButter1=tk.Button(miframeButter1,text="FILTRAR",font="Arial 20",activebackground="green",command=Butter1)
                 botonButter1.grid(row=4,column=2,padx=5,pady=5)
+                
+                boton3Butter1=tk.Button(miframeButter1,text="BORRAR",font="Arial 20",activebackground="green",command =limpiar5)
+                boton3Butter1.grid(row=4,column=1,padx=5,pady=5)
                 
                 boton2Butter1=tk.Button(miframeButter1,text="REGRESAR",font="Arial 20",activebackground="red",command = backButter1)
                 boton2Butter1.grid(row=4,column=0,padx=5,pady=5)
@@ -667,6 +681,8 @@ def select():
             if menuGauss.current()==0:
                 def backGauss0():
                     ventanaGauss0.destroy()
+                def limpiar4():
+                    entryGauss0.delete(0,tk.END)
                 def Gauss0():
                     radio0=entryGauss0.get()
                     if radio0.isnumeric() == True:
@@ -712,15 +728,20 @@ def select():
                 entryGauss0 = tk.Entry(miframeGauss0,font="Arial 18")
                 entryGauss0.grid(row=1,column=1,padx=5,pady=5)
                 entryGauss0.config(justify="center")
-
+                
                 botonGauss0=tk.Button(miframeGauss0,text="FILTRAR",font="Arial 20",activebackground="green",command=Gauss0)
                 botonGauss0.grid(row=4,column=2,padx=5,pady=5)
+                
+                boton1Gauss0=tk.Button(miframeGauss0,text="BORRAR",font="Arial 20",activebackground="green",command=limpiar4)
+                boton1Gauss0.grid(row=4,column=1,padx=5,pady=5)
                 
                 boton2Gauss0=tk.Button(miframeGauss0,text="REGRESAR",font="Arial 20",activebackground="red",command = backGauss0)
                 boton2Gauss0.grid(row=4,column=0,padx=5,pady=5)
                 ventanaGauss0.mainloop()
                 
             elif menuGauss.current()==1:
+                def limpiar():
+                    entryGauss1.delete(0,tk.END)
                 def backGauss1():
                     ventanaGauss1.destroy()
                 def Gauss1():
@@ -772,6 +793,9 @@ def select():
                 
                 botonGauss1=tk.Button(miframeGauss1,text="FILTRAR",font="Arial 20",activebackground="green",command=Gauss1)
                 botonGauss1.grid(row=4,column=2,padx=5,pady=5)
+                
+                botonGauss2=tk.Button(miframeGauss1,text="BORRAR",font="Arial 20",activebackground="green",command=limpiar)
+                botonGauss2.grid(row=4,column=1,padx=5,pady=5)
                 
                 boton2Gauss1=tk.Button(miframeGauss1,text="REGRESAR",font="Arial 20",activebackground="red",command = backGauss1)
                 boton2Gauss1.grid(row=4,column=0,padx=5,pady=5)
