@@ -136,6 +136,8 @@ def select():
                 num1 = entry1.get()
                 num2 = entry2.get()
                 if (num1.isnumeric()==True) and (num2.isnumeric()==True):
+                    num1=int(num1)
+                    num2=int(num2)
                     if num1<num2:
                         num1 = int(num1)
                         num2 = int(num2)
@@ -163,7 +165,7 @@ def select():
                         plt.title('Imagen Filtrada'), plt.xticks([]), plt.yticks([])
                         plt.show()
                     else:
-                        messagebox.showerror(message="El primer dato debe ser menor al segundo",title="Error")
+                        messagebox.showerror(message="El radio PB tiene que ser mayor que el radio PA",title="Error")
                 else:
                     messagebox.showerror(message="Ingresa solo datos numéricos",title="Error")
             
@@ -174,14 +176,14 @@ def select():
             miframepbi.pack()
             miframepbi.config(bg="green",cursor='hand2')
             
-            mensaje1=tk.Label(miframepbi,text="Ingresa el valor menor para el radio",font=('Arial 20'),bg='green')
+            mensaje1=tk.Label(miframepbi,text="Ingresa el valor del radio PA",font=('Arial 20'),bg='green')
             mensaje1.grid(row=0,column=1,padx=10,pady=10)
             
             entry1 = tk.Entry(miframepbi,font="Arial 18")
             entry1.grid(row=1,column=1,padx=5,pady=5)
             entry1.config(justify="center")
 
-            mensaje2=tk.Label(miframepbi,text="Ingresa el valor mayor para el radio",font=('Arial 20'),bg='green')
+            mensaje2=tk.Label(miframepbi,text="Ingresa el valor del radio PB",font=('Arial 20'),bg='green')
             mensaje2.grid(row=2,column=1,padx=10,pady=10)
             
             entry2 = tk.Entry(miframepbi,font="Arial 18")
@@ -202,6 +204,8 @@ def select():
                 num1 = entry1.get()
                 num2 = entry2.get()
                 if (num1.isnumeric()==True) and (num2.isnumeric()==True):
+                    num1=int(num1)
+                    num2=int(num2)
                     if num1<num2:
                         num1 = int(num1)
                         num2 = int(num2)
@@ -235,7 +239,7 @@ def select():
                         plt.title('Imagen Filtrada'), plt.xticks([]), plt.yticks([])
                         plt.show()
                     else:
-                        messagebox.showerror(message="El primer dato debe ser menor al segundo",title="Error")
+                        messagebox.showerror(message="El radio PB tiene que ser mayor que el radio PA",title="Error")
                 else:
                     messagebox.showerror(message="Ingresa solo datos numéricos",title="Error")
             
@@ -246,14 +250,14 @@ def select():
             miframepbi.pack()
             miframepbi.config(bg="green",cursor='hand2')
             
-            mensaje1=tk.Label(miframepbi,text="Ingresa el valor menor para el radio",font=('Arial 20'),bg='green')
+            mensaje1=tk.Label(miframepbi,text="Ingresa el valor del radio PA",font=('Arial 20'),bg='green')
             mensaje1.grid(row=0,column=1,padx=10,pady=10)
             
             entry1 = tk.Entry(miframepbi,font="Arial 18")
             entry1.grid(row=1,column=1,padx=5,pady=5)
             entry1.config(justify="center")
 
-            mensaje2=tk.Label(miframepbi,text="Ingresa el valor mayor para el radio",font=('Arial 20'),bg='green')
+            mensaje2=tk.Label(miframepbi,text="Ingresa el valor del radio PB",font=('Arial 20'),bg='green')
             mensaje2.grid(row=2,column=1,padx=10,pady=10)
             
             entry2 = tk.Entry(miframepbi,font="Arial 18")
@@ -278,7 +282,7 @@ def select():
                     ventanaButter0.destroy()
                 def Butter0():
                     radio0=entryButter0.get()
-                    orden0=entryButter0.get()
+                    orden0=entry2Butter0.get()
                     if radio0.isnumeric() == True and orden0.isnumeric()==True:
                         radio0=int(radio0)
                         orden0=int(orden0)
@@ -341,36 +345,33 @@ def select():
                     ventanaButter1.destroy()
                 def Butter1():
                     radio1=entryButter1.get()
-                    orden1=entryButter1.get()
+                    orden1=entry2Butter1.get()
                     if radio1.isnumeric() == True and orden1.isnumeric()==True:
                         radio1=int(radio1)
                         orden1=int(orden1)
-                        if radio1 <= 43:
-                            img = cv2.cvtColor(imagen,cv2.COLOR_BGR2GRAY)
-                            f=np.fft.fft2(img) 
-                            fshift=np.fft.fftshift(f)
-                            rows,cols=img.shape
-                            crow,ccol=int(rows/2),int(cols/2)
-                            D0=radio1
-                            N=orden1
-                            mask=np.ones((rows,cols))
-                            for i in range (rows):
-                                for j in range (cols):
-                                    dist=(i-crow)**2+(j-ccol)**2
-                                    mask[i,j]=np.sqrt((1+(dist/D0)**(2*N)))**(-1)
-                            f_ishift=fshift*mask
-                            f_shift=np.fft.ifftshift(f_ishift)
-                            img_back=np.fft.ifft2(f_shift)
-                            img_back=np.abs(img_back)
-                            plt.subplot(131),plt.imshow(img,cmap='gray')
-                            plt.title('Original'),plt.xticks([]),plt.yticks([])
-                            plt.subplot(132),plt.imshow(mask,cmap='gray')
-                            plt.title('Mascarilla'),plt.xticks([]),plt.yticks([])
-                            plt.subplot(133),plt.imshow(img_back,cmap='gray')
-                            plt.title('Imagen filtrada'),plt.xticks([]),plt.yticks([])
-                            plt.show()
-                        else:
-                            messagebox.showerror(message="El radio debe ser menor o igual a 43",title="Error")
+                        img = cv2.cvtColor(imagen,cv2.COLOR_BGR2GRAY)
+                        f=np.fft.fft2(img) 
+                        fshift=np.fft.fftshift(f)
+                        rows,cols=img.shape
+                        crow,ccol=int(rows/2),int(cols/2)
+                        D0=radio1
+                        N=orden1
+                        mask=np.ones((rows,cols))
+                        for i in range (rows):
+                            for j in range (cols):
+                                dist=(i-crow)**2+(j-ccol)**2
+                                mask[i,j]=np.sqrt((1+(dist/D0)**(2*N)))**(-1)
+                        f_ishift=fshift*mask
+                        f_shift=np.fft.ifftshift(f_ishift)
+                        img_back=np.fft.ifft2(f_shift)
+                        img_back=np.abs(img_back)
+                        plt.subplot(131),plt.imshow(img,cmap='gray')
+                        plt.title('Original'),plt.xticks([]),plt.yticks([])
+                        plt.subplot(132),plt.imshow(mask,cmap='gray')
+                        plt.title('Mascarilla'),plt.xticks([]),plt.yticks([])
+                        plt.subplot(133),plt.imshow(img_back,cmap='gray')
+                        plt.title('Imagen filtrada'),plt.xticks([]),plt.yticks([])
+                        plt.show()
                     else:
                         messagebox.showerror(message="Los datos ingresados no son númericos",title="Error")
                 ventanaButter1=tk.Tk()
@@ -602,6 +603,327 @@ def select():
                 ventanaButter3.mainloop()
             else:
                 messagebox.showerror(message="No has seleccionado un comando",title="Error")
+        def backGauss():
+            ventanaGauss.destroy()
+        def FiltroGauss():
+            if menuGauss.current()==0:
+                def backGauss0():
+                    ventanaGauss0.destroy()
+                def Gauss0():
+                    radio0=entryGauss0.get()
+                    if radio0.isnumeric() == True:
+                        radio0=int(radio0)
+                        img = cv2.cvtColor(imagen,cv2.COLOR_BGR2GRAY)
+                        f=np.fft.fft2(img) 
+                        fshift=np.fft.fftshift(f)
+                        rows,cols=img.shape
+                        crow,ccol=int(rows/2),int(cols/2)
+                        D0=radio0
+                        N=orden0
+                        mask=np.ones((rows,cols))
+                        for i in range (rows):
+                            for j in range (cols):
+                                dist=(i-crow)**2+(j-ccol)**2
+                                if dist==0:
+                                    continue
+                                mask[i,j]=np.sqrt((1+(D0/dist)**(2*N)))**(-1)
+                        f_ishift=fshift*mask
+                        f_shift=np.fft.ifftshift(f_ishift)
+                        img_back=np.fft.ifft2(f_shift)
+                        img_back=np.abs(img_back)
+                        plt.subplot(131),plt.imshow(img,cmap='gray')
+                        plt.title('Original'),plt.xticks([]),plt.yticks([])
+                        plt.subplot(132),plt.imshow(mask,cmap='gray')
+                        plt.title('Mascarilla'),plt.xticks([]),plt.yticks([])
+                        plt.subplot(133),plt.imshow(img_back,cmap='gray')
+                        plt.title('Imagen filtrada'),plt.xticks([]),plt.yticks([])
+                        plt.show()
+                    else:
+                        messagebox.showerror(message="Los datos ingresados no son númericos",title="Error")
+                ventanaGauss0=tk.Tk()
+                ventanaGauss0.title("Butter Pasa Bajas")
+                miframeGauss0=tk.Frame(ventanaGauss0)
+                miframeGauss0.pack()
+                miframeGauss0.config(bg="green",cursor='hand2')
+                
+                mensajeGauss0=tk.Label(miframeGauss0,text="Ingresa el valor del radio",font=('Arial 20'),bg='green')
+                mensajeGauss0.grid(row=0,column=1,padx=10,pady=10)
+                
+                entryGauss0 = tk.Entry(miframeGauss0,font="Arial 18")
+                entryGauss0.grid(row=1,column=1,padx=5,pady=5)
+                entryGauss0.config(justify="center")
+
+                botonGauss0=tk.Button(miframeGauss0,text="FILTRAR",font="Arial 20",activebackground="green",command=Gauss0)
+                botonGauss0.grid(row=4,column=2,padx=5,pady=5)
+                
+                boton2Gauss0=tk.Button(miframeGauss0,text="REGRESAR",font="Arial 20",activebackground="red",command = backGauss0)
+                boton2Gauss0.grid(row=4,column=0,padx=5,pady=5)
+                ventanaGauss0.mainloop()
+                
+            elif menuGauss.current()==1:
+                def backGauss1():
+                    ventanaGauss1.destroy()
+                def Gauss1():
+                    radio1=entryGauss1.get()
+                    orden1=entryGauss1.get()
+                    if radio1.isnumeric() == True and orden1.isnumeric()==True:
+                        radio1=int(radio1)
+                        orden1=int(orden1)
+                        img = cv2.cvtColor(imagen,cv2.COLOR_BGR2GRAY)
+                        f=np.fft.fft2(img) 
+                        fshift=np.fft.fftshift(f)
+                        rows,cols=img.shape
+                        crow,ccol=int(rows/2),int(cols/2)
+                        D0=radio1
+                        N=orden1
+                        mask=np.ones((rows,cols))
+                        for i in range (rows):
+                            for j in range (cols):
+                                dist=(i-crow)**2+(j-ccol)**2
+                                mask[i,j]=np.sqrt((1+(dist/D0)**(2*N)))**(-1)
+                        f_ishift=fshift*mask
+                        f_shift=np.fft.ifftshift(f_ishift)
+                        img_back=np.fft.ifft2(f_shift)
+                        img_back=np.abs(img_back)
+                        plt.subplot(131),plt.imshow(img,cmap='gray')
+                        plt.title('Original'),plt.xticks([]),plt.yticks([])
+                        plt.subplot(132),plt.imshow(mask,cmap='gray')
+                        plt.title('Mascarilla'),plt.xticks([]),plt.yticks([])
+                        plt.subplot(133),plt.imshow(img_back,cmap='gray')
+                        plt.title('Imagen filtrada'),plt.xticks([]),plt.yticks([])
+                        plt.show()
+                    else:
+                        messagebox.showerror(message="Los datos ingresados no son númericos",title="Error")
+                ventanaGauss1=tk.Tk()
+                ventanaGauss1.title("Butter Pasa Altas")
+                miframeGauss1=tk.Frame(ventanaGauss1)
+                miframeGauss1.pack()
+                miframeGauss1.config(bg="purple1",cursor='hand2')
+                mensajeGauss0=tk.Label(miframeGauss1,text="Ingresa el valor del radio",font=('Arial 20'),bg='purple1')
+                mensajeGauss0.grid(row=0,column=1,padx=10,pady=10)
+                
+                entryGauss1 = tk.Entry(miframeGauss1,font="Arial 18")
+                entryGauss1.grid(row=1,column=1,padx=5,pady=5)
+                entryGauss1.config(justify="center")
+                
+                mensajeGauss1=tk.Label(miframeGauss1,text="Ingresa el orden del filtro",font=('Arial 20'),bg='purple1')
+                mensajeGauss1.grid(row=2,column=1,padx=10,pady=10)
+                
+                entry2Gauss1 = tk.Entry(miframeGauss1,font="Arial 18")
+                entry2Gauss1.grid(row=3,column=1,padx=5,pady=5)
+                entry2Gauss1.config(justify="center")
+                
+                botonGauss1=tk.Button(miframeGauss1,text="FILTRAR",font="Arial 20",activebackground="green",command=Gauss1)
+                botonGauss1.grid(row=4,column=2,padx=5,pady=5)
+                
+                boton2Gauss1=tk.Button(miframeGauss1,text="REGRESAR",font="Arial 20",activebackground="red",command = backGauss1)
+                boton2Gauss1.grid(row=4,column=0,padx=5,pady=5)
+                ventanaGauss1.mainloop()
+            if menuGauss.current()==2:
+                def backGauss2():
+                    ventanaGauss2.destroy()
+                def limpiar():
+                    entryGauss2.delete(0,tk.END)
+                    entry2Gauss2.delete(0,tk.END)
+                    entry3Gauss2.delete(0,tk.END)
+                    entry4Gauss2.delete(0,tk.END)
+                def Gauss2():
+                    radio2=entryGauss2.get()
+                    orden2=entry2Gauss2.get()
+                    radio3=entry3Gauss2.get()
+                    orden3=entry4Gauss2.get()
+                    if radio2.isnumeric()==True and orden2.isnumeric()==True and radio3.isnumeric()==True and orden3.isnumeric()==True:
+                        radio2 = int(radio2)
+                        orden2 = int(orden2)
+                        radio3 = int(radio3)
+                        orden3 = int(orden3)
+                        if radio2>radio3:
+                            img = cv2.cvtColor(imagen,cv2.COLOR_BGR2GRAY)
+                            f=np.fft.fft2(img)
+                            fshift=np.fft.fftshift(f)
+                            rows,cols=img.shape
+                            crow,ccol=int(rows/2),int(cols/2)
+                            D0=radio2
+                            N=orden2
+                            mask=np.ones((rows,cols))
+                            #Pasa Bajas
+                            for i in range (rows):
+                                for j in range (cols):
+                                    dist=(i-crow)**2+(j-ccol)**2
+                                    mask[i,j]=np.sqrt((1+(dist/D0)**(2*N)))**(-1)
+                            D0=radio3
+                            N=orden3
+                            mask1=np.ones((rows,cols))
+                            #Pasa Altas
+                            for i in range (rows):
+                                for j in range (cols):
+                                    dist=(i-crow)**2+(j-ccol)**2
+                                    if dist==0:
+                                        continue
+                                    mask1[i,j]=np.sqrt((1+(D0/dist)**(2*N)))**(-1)
+                            f_ishift=fshift*mask*mask1
+                            f_shift=np.fft.ifftshift(f_ishift)
+                            img_back=np.fft.ifft2(f_shift)
+                            img_back=np.abs(img_back)
+                            plt.subplot(131),plt.imshow(img,cmap='gray')
+                            plt.title('Original'),plt.xticks([]),plt.yticks([])
+                            plt.subplot(132),plt.imshow(mask,cmap='gray')
+                            plt.title('Mascarilla Pasa Banda'),plt.xticks([]),plt.yticks([])
+                            plt.subplot(133),plt.imshow(img_back,cmap='gray')
+                            plt.title('Imagen filtrada'),plt.xticks([]),plt.yticks([])
+                            plt.show()
+                        else:
+                            messagebox.showerror(message="El radio PB tiene que ser mayor que el radio PA",title="Error")
+                    else:
+                        messagebox.showerror(message="Los datos ingresados no son númericos",title="Error")
+                ventanaGauss2=tk.Tk()
+                ventanaGauss2.title("Pasa Bandas Butterworth")
+                miframeGauss2=tk.Frame(ventanaGauss2)
+                miframeGauss2.pack()
+                miframeGauss2.config(bg="salmon2",cursor='hand2')
+                #----------------------------PB------------------------------------------------------------------
+                mensajeGauss0=tk.Label(miframeGauss2,text="Ingresa el valor del radio PB",font=('Arial 15'),bg='salmon2')
+                mensajeGauss0.grid(row=0,column=0,padx=10,pady=10)
+                
+                entryGauss2 = tk.Entry(miframeGauss2,font="Arial 18")
+                entryGauss2.grid(row=1,column=0,padx=5,pady=5)
+                entryGauss2.config(justify="center")
+                
+                mensajeGauss2=tk.Label(miframeGauss2,text="Ingresa el orden del filtro PB",font=('Arial 15'),bg='salmon2')
+                mensajeGauss2.grid(row=2,column=0,padx=10,pady=10)
+                
+                entry2Gauss2 = tk.Entry(miframeGauss2,font="Arial 18")
+                entry2Gauss2.grid(row=3,column=0,padx=5,pady=5)
+                entry2Gauss2.config(justify="center")
+                #-----------------------------PA--------------------------------------------------------------
+                mensajeGauss0=tk.Label(miframeGauss2,text="Ingresa el valor del radio PA",font=('Arial 15'),bg='salmon2')
+                mensajeGauss0.grid(row=0,column=2,padx=10,pady=10)
+                
+                entry3Gauss2 = tk.Entry(miframeGauss2,font="Arial 18")
+                entry3Gauss2.grid(row=1,column=2,padx=5,pady=5)
+                entry3Gauss2.config(justify="center")
+                
+                mensajeGauss2=tk.Label(miframeGauss2,text="Ingresa el orden del filtro PA",font=('Arial 15'),bg='salmon2')
+                mensajeGauss2.grid(row=2,column=2,padx=10,pady=10)
+                
+                entry4Gauss2 = tk.Entry(miframeGauss2,font="Arial 18")
+                entry4Gauss2.grid(row=3,column=2,padx=5,pady=5)
+                entry4Gauss2.config(justify="center")
+                
+                
+                botonGauss2=tk.Button(miframeGauss2,text="FILTRAR",font="Arial 20",activebackground="green",command=Gauss2)
+                botonGauss2.grid(row=4,column=2,padx=5,pady=5)
+                
+                boton3Gauss2=tk.Button(miframeGauss2,text="BORRAR",font="Arial 20",activebackground="green",command=limpiar)
+                boton3Gauss2.grid(row=4,column=1,padx=5,pady=5)
+                
+                boton2Gauss2=tk.Button(miframeGauss2,text="REGRESAR",font="Arial 20",activebackground="red",command = backGauss2)
+                boton2Gauss2.grid(row=4,column=0,padx=5,pady=5)
+                ventanaGauss2.mainloop()
+            if menuGauss.current()==3:
+                def backGauss3():
+                    ventanaGauss3.destroy()
+                def limpiar3():
+                    entryGauss3.delete(0,tk.END)
+                    entry2Gauss3.delete(0,tk.END)
+                    entry3Gauss3.delete(0,tk.END)
+                    entry4Gauss3.delete(0,tk.END)
+                def Gauss3():
+                    radio2=entryGauss3.get()
+                    orden2=entry2Gauss3.get()
+                    radio3=entry3Gauss3.get()
+                    orden3=entry4Gauss3.get()
+                    if radio2.isnumeric()==True and orden2.isnumeric()==True and radio3.isnumeric()==True and orden3.isnumeric()==True:
+                        radio2 = int(radio2)
+                        orden2 = int(orden2)
+                        radio3 = int(radio3)
+                        orden3 = int(orden3)
+                        if radio2>radio3:
+                            img = cv2.cvtColor(imagen,cv2.COLOR_BGR2GRAY)
+                            f=np.fft.fft2(img)
+                            fshift=np.fft.fftshift(f)
+                            rows,cols=img.shape
+                            crow,ccol=int(rows/2),int(cols/2)
+                            D0=radio2
+                            N=orden2
+                            mask=np.ones((rows,cols))
+                            #Pasa Bajas
+                            for i in range (rows):
+                                for j in range (cols):
+                                    dist=(i-crow)**2+(j-ccol)**2
+                                    mask[i,j]=np.sqrt((1+(dist/D0)**(2*N)))**(-1)
+                            D0=radio3
+                            N=orden3
+                            mask1=np.ones((rows,cols))
+                            #Pasa Altas
+                            for i in range (rows):
+                                for j in range (cols):
+                                    dist=(i-crow)**2+(j-ccol)**2
+                                    if dist==0:
+                                        continue
+                                    mask1[i,j]=np.sqrt((1+(D0/dist)**(2*N)))**(-1)
+                            f_ishift=fshift*mask*mask1
+                            f_shift=np.fft.ifftshift(f_ishift)
+                            img_back=np.fft.ifft2(f_shift)
+                            img_back=np.abs(img_back)
+                            plt.subplot(131),plt.imshow(img,cmap='gray')
+                            plt.title('Original'),plt.xticks([]),plt.yticks([])
+                            plt.subplot(132),plt.imshow(mask,cmap='gray')
+                            plt.title('Mascarilla Rechaza Banda'),plt.xticks([]),plt.yticks([])
+                            plt.subplot(133),plt.imshow(img_back,cmap='gray')
+                            plt.title('Imagen filtrada'),plt.xticks([]),plt.yticks([])
+                            plt.show()
+                        else:
+                            messagebox.showerror(message="El radio PB tiene que ser mayor que el radio PA",title="Error")
+                    else:
+                        messagebox.showerror(message="Los datos ingresados no son númericos",title="Error")
+                ventanaGauss3=tk.Tk()
+                ventanaGauss3.title("Rechaza Banda Butterworth")
+                miframeGauss3=tk.Frame(ventanaGauss3)
+                miframeGauss3.pack()
+                miframeGauss3.config(bg="bisque",cursor='hand2')
+                #----------------------------PB------------------------------------------------------------------
+                mensajeGauss0=tk.Label(miframeGauss3,text="Ingresa el valor del radio PB",font=('Arial 15'),bg='bisque')
+                mensajeGauss0.grid(row=0,column=0,padx=10,pady=10)
+                
+                entryGauss3 = tk.Entry(miframeGauss3,font="Arial 18")
+                entryGauss3.grid(row=1,column=0,padx=5,pady=5)
+                entryGauss3.config(justify="center")
+                
+                mensajeGauss0=tk.Label(miframeGauss3,text="Ingresa el orden del filtro PB",font=('Arial 15'),bg='bisque')
+                mensajeGauss0.grid(row=2,column=0,padx=10,pady=10)
+                
+                entry2Gauss3 = tk.Entry(miframeGauss3,font="Arial 18")
+                entry2Gauss3.grid(row=3,column=0,padx=5,pady=5)
+                entry2Gauss3.config(justify="center")
+                #-----------------------------PA--------------------------------------------------------------
+                mensajeGauss0=tk.Label(miframeGauss3,text="Ingresa el valor del radio PA",font=('Arial 15'),bg='bisque')
+                mensajeGauss0.grid(row=0,column=2,padx=10,pady=10)
+                
+                entry3Gauss3 = tk.Entry(miframeGauss3,font="Arial 18")
+                entry3Gauss3.grid(row=1,column=2,padx=5,pady=5)
+                entry3Gauss3.config(justify="center")
+                
+                mensajeGauss2=tk.Label(miframeGauss3,text="Ingresa el orden del filtro PA",font=('Arial 15'),bg='bisque')
+                mensajeGauss2.grid(row=2,column=2,padx=10,pady=10)
+                
+                entry4Gauss3 = tk.Entry(miframeGauss3,font="Arial 18")
+                entry4Gauss3.grid(row=3,column=2,padx=5,pady=5)
+                entry4Gauss3.config(justify="center")
+                
+                
+                botonGauss3=tk.Button(miframeGauss3,text="FILTRAR",font="Arial 20",activebackground="green",command=Gauss3)
+                botonGauss3.grid(row=4,column=2,padx=5,pady=5)
+                
+                boton3Gauss3=tk.Button(miframeGauss3,text="BORRAR",font="Arial 20",activebackground="green",command=limpiar3)
+                boton3Gauss3.grid(row=4,column=1,padx=5,pady=5)
+                
+                boton2Gauss3=tk.Button(miframeGauss3,text="REGRESAR",font="Arial 20",activebackground="red",command = backGauss3)
+                boton2Gauss3.grid(row=4,column=0,padx=5,pady=5)
+                ventanaGauss3.mainloop()
+            else:
+                messagebox.showerror(message="No has seleccionado un comando",title="Error")
+        
         #-----------------------------BUTTERWORTH-------------------------------------------------------------
         if menu2.current()==0:
             ventanaButter=tk.Tk()
@@ -618,8 +940,26 @@ def select():
             botonButter1=tk.Button(miframeButter,text="REGRESAR",font="Arial 20",activebackground="red",command=backButter)
             botonButter1.grid(row=3,column=1,padx=5,pady=5)
             ventanaButter.mainloop()
+        #-----------------------------GAUSSIANO-------------------------------------------------------------
+        elif menu2.current()==1:
+            ventanaGauss=tk.Tk()
+            ventanaGauss.title("Filtros Gaussianos")
+            miframeGauss=tk.Frame(ventanaGauss)
+            miframeGauss.pack()   
+            miframeGauss.config(bg="green3",cursor='hand2')
+            menuGauss=ttk.Combobox(miframeGauss,font="Arial 20",justify=tk.CENTER,width=35,state="readonly")
+            menuGauss.grid(row=1,column=1,padx=15,pady=15)
+            opcionesGauss=["Pasa Bajas","Pasa Altas","Pasa Banda","Rechazo de Banda"]
+            menuGauss["values"]=opcionesGauss
+            botonGauss=tk.Button(miframeGauss,text="SELECCIONAR",font="Arial 20",activebackground="green",command=FiltroGauss)
+            botonGauss.grid(row=2,column=1,padx=5,pady=5)
+            botonGauss1=tk.Button(miframeGauss,text="REGRESAR",font="Arial 20",activebackground="red",command=backGauss)
+            botonGauss1.grid(row=3,column=1,padx=5,pady=5)
+            ventanaGauss.mainloop()
         else:
             messagebox.showerror(message="No has seleccionado un comando",title="Error")
+
+
 #-------------------------------------------------------------------------------------------
 
     #SEGUNDA VENTANA
