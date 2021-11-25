@@ -31,7 +31,9 @@ def select():
     def ITF():
         if menu1.current()==0:
             def regresar1():
-                ventanapbi.destroy() 
+                ventanapbi.destroy()
+            def limpiar1():
+                entry.delete(0,tk.END)
             def Filtro1():
                 num = entry.get()
                 if num.isnumeric() == True:
@@ -80,13 +82,18 @@ def select():
             boton9=tk.Button(miframepbi,text="FILTRAR",font="Arial 20",activebackground="green",command=Filtro1)
             boton9.grid(row=3,column=2,padx=5,pady=5)
             
+            botonpbi=tk.Button(miframepbi,text="BORRAR",font="Arial 20",activebackground="green",command=limpiar1)
+            botonpbi.grid(row=4,column=1,padx=5,pady=5)
+
             boton9=tk.Button(miframepbi,text="REGRESAR",font="Arial 20",activebackground="red",command = regresar1)
             boton9.grid(row=3,column=0,padx=5,pady=5)
             ventanapbi.mainloop()
         
         elif menu1.current()==1:
             def regresar2():
-                ventanapai.destroy() 
+                ventanapai.destroy()
+            def limpiar2():
+                entry.delete(0,tk.END)
             def Filtro2():
                 num = entry.get()
                 if num.isnumeric() == True:
@@ -135,13 +142,18 @@ def select():
             boton9=tk.Button(miframepbi,text="FILTRAR",font="Arial 20",activebackground="green",command=Filtro2)
             boton9.grid(row=3,column=2,padx=5,pady=5)
             
+            botonpbi=tk.Button(miframepbi,text="BORRAR",font="Arial 20",activebackground="green",command=limpiar2)
+            botonpbi.grid(row=4,column=1,padx=5,pady=5)
+
             boton9=tk.Button(miframepbi,text="REGRESAR",font="Arial 20",activebackground="red",command = regresar2)
             boton9.grid(row=3,column=0,padx=5,pady=5)
             ventanapai.mainloop()
         
         elif menu1.current()==2:
             def regresar3():
-                ventanapbani.destroy() 
+                ventanapbani.destroy()
+            def limpiar3():
+                entry.delete(0,tk.END)
             def Filtro3():
                 num1 = entry1.get()
                 num2 = entry2.get()
@@ -207,6 +219,9 @@ def select():
             
             boton9=tk.Button(miframepbi,text="FILTRAR",font="Arial 20",activebackground="green",command=Filtro3)
             boton9.grid(row=4,column=2,padx=5,pady=5)
+
+            botonpbi=tk.Button(miframepbi,text="BORRAR",font="Arial 20",activebackground="green",command=limpiar3)
+            botonpbi.grid(row=4,column=1,padx=5,pady=5)
             
             boton9=tk.Button(miframepbi,text="REGRESAR",font="Arial 20",activebackground="red",command = regresar3)
             boton9.grid(row=4,column=0,padx=5,pady=5)
@@ -214,7 +229,9 @@ def select():
         
         elif menu1.current()==3:
             def regresar4():
-                ventanarbani.destroy() 
+                ventanarbani.destroy()
+            def limpiar4():
+                entry.delete(0,tk.END)
             def Filtro4():
                 num1 = entry1.get()
                 num2 = entry2.get()
@@ -287,6 +304,9 @@ def select():
             boton9=tk.Button(miframepbi,text="FILTRAR",font="Arial 20",activebackground="green",command=Filtro4)
             boton9.grid(row=4,column=2,padx=5,pady=5)
             
+            botonpbi=tk.Button(miframepbi,text="BORRAR",font="Arial 20",activebackground="green",command=limpiar4)
+            botonpbi.grid(row=4,column=1,padx=5,pady=5)
+
             boton9=tk.Button(miframepbi,text="REGRESAR",font="Arial 20",activebackground="red",command = regresar4)
             boton9.grid(row=4,column=0,padx=5,pady=5)
             ventanarbani.mainloop()
