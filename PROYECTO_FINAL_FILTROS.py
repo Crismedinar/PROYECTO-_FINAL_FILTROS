@@ -9,15 +9,12 @@ import re
 import os
 from numpy.lib.type_check import imag
 
-
-
 ventana=tk.Tk()
 ventana.title("Prgrama Filtros")
 
 miframe=tk.Frame(ventana)
 miframe.pack()
 miframe.config(bg="black",cursor='hand2')
-
 
 #----------------------------------FUNCIONES----------------------------------------------------
 def select():
@@ -37,31 +34,34 @@ def select():
             def Filtro1():
                 num = entry.get()
                 if num.isnumeric() == True:
-                    num = int(num)
-                    img = cv2.cvtColor(imagen,cv2.COLOR_BGR2GRAY)
-                    f=np.fft.fft2(img)
-                    fshift=np.fft.fftshift(f)
-                    dft = cv2.dft(np.float32(img),flags = cv2.DFT_COMPLEX_OUTPUT)
-                    dft_shift = np.fft.fftshift(dft)
-                    tff= 20*np.log(cv2.magnitude(dft_shift[:,:,0],dft_shift[:,:,1]))
-                    rows,cols=img.shape
-                    crow,ccol=int(rows/2),int(cols/2)
-                    mask=np.ones((rows,cols), np.uint8)
-                    D=num
-                    mask[crow-D:crow+D, ccol-D:ccol+D]=0
-                    f_ishift=fshift*mask
-                    f_shift=np.fft.ifftshift(f_ishift)
-                    img_back=np.fft.ifft2(f_shift)
-                    img_back=np.abs(img_back)
-                    plt.subplot(221),plt.imshow(img, cmap= 'gray')
-                    plt.title('Original'), plt.xticks([]), plt.yticks([])
-                    plt.subplot(222),plt.imshow(tff, cmap= 'gray')
-                    plt.title('Transformada'), plt.xticks([]), plt.yticks([])
-                    plt.subplot(223),plt.imshow(mask, cmap= 'gray')
-                    plt.title('Mascarilla'), plt.xticks([]), plt.yticks([])
-                    plt.subplot(224),plt.imshow(img_back,cmap= 'gray')
-                    plt.title('Imagen Filtrada'), plt.xticks([]), plt.yticks([])
-                    plt.show()
+                    try:
+                        num = int(num)
+                        img = cv2.cvtColor(imagen,cv2.COLOR_BGR2GRAY)
+                        f=np.fft.fft2(img)
+                        fshift=np.fft.fftshift(f)
+                        dft = cv2.dft(np.float32(img),flags = cv2.DFT_COMPLEX_OUTPUT)
+                        dft_shift = np.fft.fftshift(dft)
+                        tff= 20*np.log(cv2.magnitude(dft_shift[:,:,0],dft_shift[:,:,1]))
+                        rows,cols=img.shape
+                        crow,ccol=int(rows/2),int(cols/2)
+                        mask=np.ones((rows,cols), np.uint8)
+                        D=num
+                        mask[crow-D:crow+D, ccol-D:ccol+D]=0
+                        f_ishift=fshift*mask
+                        f_shift=np.fft.ifftshift(f_ishift)
+                        img_back=np.fft.ifft2(f_shift)
+                        img_back=np.abs(img_back)
+                        plt.subplot(221),plt.imshow(img, cmap= 'gray')
+                        plt.title('Original'), plt.xticks([]), plt.yticks([])
+                        plt.subplot(222),plt.imshow(tff, cmap= 'gray')
+                        plt.title('Transformada'), plt.xticks([]), plt.yticks([])
+                        plt.subplot(223),plt.imshow(mask, cmap= 'gray')
+                        plt.title('Mascarilla'), plt.xticks([]), plt.yticks([])
+                        plt.subplot(224),plt.imshow(img_back,cmap= 'gray')
+                        plt.title('Imagen Filtrada'), plt.xticks([]), plt.yticks([])
+                        plt.show()
+                    except:
+                        messagebox.showerror(message="Verifica los datos",title="Error")
                 else:
                     messagebox.showerror(message="Ingresa solo datos numéricos",title="Error")
 
@@ -83,7 +83,7 @@ def select():
             boton9.grid(row=3,column=2,padx=5,pady=5)
             
             botonpbi=tk.Button(miframepbi,text="BORRAR",font="Arial 20",activebackground="green",command=limpiar1)
-            botonpbi.grid(row=4,column=1,padx=5,pady=5)
+            botonpbi.grid(row=3,column=1,padx=5,pady=5)
 
             boton9=tk.Button(miframepbi,text="REGRESAR",font="Arial 20",activebackground="red",command = regresar1)
             boton9.grid(row=3,column=0,padx=5,pady=5)
@@ -97,31 +97,34 @@ def select():
             def Filtro2():
                 num = entry.get()
                 if num.isnumeric() == True:
-                    num = int(num)
-                    img = cv2.cvtColor(imagen,cv2.COLOR_BGR2GRAY)
-                    f=np.fft.fft2(img)
-                    fshift=np.fft.fftshift(f)
-                    dft = cv2.dft(np.float32(img),flags = cv2.DFT_COMPLEX_OUTPUT)
-                    dft_shift = np.fft.fftshift(dft)
-                    tff= 20*np.log(cv2.magnitude(dft_shift[:,:,0],dft_shift[:,:,1]))
-                    rows,cols=img.shape
-                    crow,ccol=int(rows/2),int(cols/2)
-                    mask=np.zeros((rows,cols), np.uint8)
-                    D=num
-                    mask[crow-D:crow+D, ccol-D:ccol+D]=1
-                    f_ishift=fshift*mask
-                    f_shift=np.fft.ifftshift(f_ishift)
-                    img_back=np.fft.ifft2(f_shift)
-                    img_back=np.abs(img_back)
-                    plt.subplot(221),plt.imshow(img, cmap= 'gray')
-                    plt.title('Original'), plt.xticks([]), plt.yticks([])
-                    plt.subplot(222),plt.imshow(tff, cmap= 'gray')
-                    plt.title('Transformada'), plt.xticks([]), plt.yticks([])
-                    plt.subplot(223),plt.imshow(mask, cmap= 'gray')
-                    plt.title('Mascarilla'), plt.xticks([]), plt.yticks([])
-                    plt.subplot(224),plt.imshow(img_back,cmap= 'gray')
-                    plt.title('Imagen Filtrada'), plt.xticks([]), plt.yticks([])
-                    plt.show()
+                    try:
+                        num = int(num)
+                        img = cv2.cvtColor(imagen,cv2.COLOR_BGR2GRAY)
+                        f=np.fft.fft2(img)
+                        fshift=np.fft.fftshift(f)
+                        dft = cv2.dft(np.float32(img),flags = cv2.DFT_COMPLEX_OUTPUT)
+                        dft_shift = np.fft.fftshift(dft)
+                        tff= 20*np.log(cv2.magnitude(dft_shift[:,:,0],dft_shift[:,:,1]))
+                        rows,cols=img.shape
+                        crow,ccol=int(rows/2),int(cols/2)
+                        mask=np.zeros((rows,cols), np.uint8)
+                        D=num
+                        mask[crow-D:crow+D, ccol-D:ccol+D]=1
+                        f_ishift=fshift*mask
+                        f_shift=np.fft.ifftshift(f_ishift)
+                        img_back=np.fft.ifft2(f_shift)
+                        img_back=np.abs(img_back)
+                        plt.subplot(221),plt.imshow(img, cmap= 'gray')
+                        plt.title('Original'), plt.xticks([]), plt.yticks([])
+                        plt.subplot(222),plt.imshow(tff, cmap= 'gray')
+                        plt.title('Transformada'), plt.xticks([]), plt.yticks([])
+                        plt.subplot(223),plt.imshow(mask, cmap= 'gray')
+                        plt.title('Mascarilla'), plt.xticks([]), plt.yticks([])
+                        plt.subplot(224),plt.imshow(img_back,cmap= 'gray')
+                        plt.title('Imagen Filtrada'), plt.xticks([]), plt.yticks([])
+                        plt.show()
+                    except:
+                        messagebox.showerror(message="Verifica los datos",title="Error")
                 else:
                     messagebox.showerror(message="Ingresa solo datos numéricos",title="Error")
 
@@ -143,7 +146,7 @@ def select():
             boton9.grid(row=3,column=2,padx=5,pady=5)
             
             botonpbi=tk.Button(miframepbi,text="BORRAR",font="Arial 20",activebackground="green",command=limpiar2)
-            botonpbi.grid(row=4,column=1,padx=5,pady=5)
+            botonpbi.grid(row=3,column=1,padx=5,pady=5)
 
             boton9=tk.Button(miframepbi,text="REGRESAR",font="Arial 20",activebackground="red",command = regresar2)
             boton9.grid(row=3,column=0,padx=5,pady=5)
@@ -162,36 +165,37 @@ def select():
                     num1=int(num1)
                     num2=int(num2)
                     if num1<num2:
-                        num1 = int(num1)
-                        num2 = int(num2)
-                        img = cv2.cvtColor(imagen,cv2.COLOR_BGR2GRAY)
-                        f=np.fft.fft2(img)
-                        fshift=np.fft.fftshift(f)
-                        dft = cv2.dft(np.float32(img),flags = cv2.DFT_COMPLEX_OUTPUT)
-                        dft_shift = np.fft.fftshift(dft)
-                        tff= 20*np.log(cv2.magnitude(dft_shift[:,:,0],dft_shift[:,:,1]))
-                        rows,cols=img.shape
-                        crow,ccol=int(rows/2),int(cols/2)
-                        mask1=np.ones((rows,cols), np.uint8)
-                        D1=num1
-                        mask1[crow-D1:crow+D1, ccol-D1:ccol+D1]=0
-                        mask2=np.zeros((rows,cols), np.uint8)
-                        D2=num2
-                        mask2[crow-D2:crow+D2, ccol-D2:ccol+D2]=1
-                        mask=mask1*mask2
-                        f_ishift=fshift*mask
-                        f_shift=np.fft.ifftshift(f_ishift)
-                        img_back=np.fft.ifft2(f_shift)
-                        img_back=np.abs(img_back)
-                        plt.subplot(221),plt.imshow(img, cmap= 'gray')
-                        plt.title('Original'), plt.xticks([]), plt.yticks([])
-                        plt.subplot(222),plt.imshow(tff, cmap= 'gray')
-                        plt.title('Transformada'), plt.xticks([]), plt.yticks([])
-                        plt.subplot(223),plt.imshow(mask, cmap= 'gray')
-                        plt.title('Mascarilla'), plt.xticks([]), plt.yticks([])
-                        plt.subplot(224),plt.imshow(img_back,cmap= 'gray')
-                        plt.title('Imagen Filtrada'), plt.xticks([]), plt.yticks([])
-                        plt.show()
+                        try:
+                            img = cv2.cvtColor(imagen,cv2.COLOR_BGR2GRAY)
+                            f=np.fft.fft2(img)
+                            fshift=np.fft.fftshift(f)
+                            dft = cv2.dft(np.float32(img),flags = cv2.DFT_COMPLEX_OUTPUT)
+                            dft_shift = np.fft.fftshift(dft)
+                            tff= 20*np.log(cv2.magnitude(dft_shift[:,:,0],dft_shift[:,:,1]))
+                            rows,cols=img.shape
+                            crow,ccol=int(rows/2),int(cols/2)
+                            mask1=np.ones((rows,cols), np.uint8)
+                            D1=num1
+                            mask1[crow-D1:crow+D1, ccol-D1:ccol+D1]=0
+                            mask2=np.zeros((rows,cols), np.uint8)
+                            D2=num2
+                            mask2[crow-D2:crow+D2, ccol-D2:ccol+D2]=1
+                            mask=mask1*mask2
+                            f_ishift=fshift*mask
+                            f_shift=np.fft.ifftshift(f_ishift)
+                            img_back=np.fft.ifft2(f_shift)
+                            img_back=np.abs(img_back)
+                            plt.subplot(221),plt.imshow(img, cmap= 'gray')
+                            plt.title('Original'), plt.xticks([]), plt.yticks([])
+                            plt.subplot(222),plt.imshow(tff, cmap= 'gray')
+                            plt.title('Transformada'), plt.xticks([]), plt.yticks([])
+                            plt.subplot(223),plt.imshow(mask, cmap= 'gray')
+                            plt.title('Mascarilla'), plt.xticks([]), plt.yticks([])
+                            plt.subplot(224),plt.imshow(img_back,cmap= 'gray')
+                            plt.title('Imagen Filtrada'), plt.xticks([]), plt.yticks([])
+                            plt.show()
+                        except:
+                            messagebox.showerror(message="Verifica los datos",title="Error")
                     else:
                         messagebox.showerror(message="El radio PB tiene que ser mayor que el radio PA",title="Error")
                 else:
@@ -241,42 +245,43 @@ def select():
                     num1=int(num1)
                     num2=int(num2)
                     if num1<num2:
-                        num1 = int(num1)
-                        num2 = int(num2)
-                        img = cv2.cvtColor(imagen,cv2.COLOR_BGR2GRAY)
-                        f=np.fft.fft2(img)
-                        fshift=np.fft.fftshift(f)
-                        dft = cv2.dft(np.float32(img),flags = cv2.DFT_COMPLEX_OUTPUT)
-                        dft_shift = np.fft.fftshift(dft)
-                        tff= 20*np.log(cv2.magnitude(dft_shift[:,:,0],dft_shift[:,:,1]))
-                        rows,cols=img.shape
-                        crow,ccol=int(rows/2),int(cols/2)
-                        mask1=np.ones((rows,cols), np.uint8)
-                        D1=num1
-                        mask1[crow-D1:crow+D1, ccol-D1:ccol+D1]=0
-                        mask2=np.zeros((rows,cols), np.uint8)
-                        D2=num2
-                        mask2[crow-D2:crow+D2, ccol-D2:ccol+D2]=1
-                        mask=mask1*mask2
-                        for i in range(crow*2):
-                            for j in range(ccol*2):
-                                if mask[i,j]==0:
-                                    mask[i,j]=1
-                                elif mask[i,j]==1:
-                                    mask[i,j]=0
-                        f_ishift=fshift*mask
-                        f_shift=np.fft.ifftshift(f_ishift)
-                        img_back=np.fft.ifft2(f_shift)
-                        img_back=np.abs(img_back)
-                        plt.subplot(221),plt.imshow(img, cmap= 'gray')
-                        plt.title('Original'), plt.xticks([]), plt.yticks([])
-                        plt.subplot(222),plt.imshow(tff, cmap= 'gray')
-                        plt.title('Transformada'), plt.xticks([]), plt.yticks([])
-                        plt.subplot(223),plt.imshow(mask, cmap= 'gray')
-                        plt.title('Mascarilla'), plt.xticks([]), plt.yticks([])
-                        plt.subplot(224),plt.imshow(img_back,cmap= 'gray')
-                        plt.title('Imagen Filtrada'), plt.xticks([]), plt.yticks([])
-                        plt.show()
+                        try:
+                            img = cv2.cvtColor(imagen,cv2.COLOR_BGR2GRAY)
+                            f=np.fft.fft2(img)
+                            fshift=np.fft.fftshift(f)
+                            dft = cv2.dft(np.float32(img),flags = cv2.DFT_COMPLEX_OUTPUT)
+                            dft_shift = np.fft.fftshift(dft)
+                            tff= 20*np.log(cv2.magnitude(dft_shift[:,:,0],dft_shift[:,:,1]))
+                            rows,cols=img.shape
+                            crow,ccol=int(rows/2),int(cols/2)
+                            mask1=np.ones((rows,cols), np.uint8)
+                            D1=num1
+                            mask1[crow-D1:crow+D1, ccol-D1:ccol+D1]=0
+                            mask2=np.zeros((rows,cols), np.uint8)
+                            D2=num2
+                            mask2[crow-D2:crow+D2, ccol-D2:ccol+D2]=1
+                            mask=mask1*mask2
+                            for i in range(crow*2):
+                                for j in range(ccol*2):
+                                    if mask[i,j]==0:
+                                        mask[i,j]=1
+                                    elif mask[i,j]==1:
+                                        mask[i,j]=0
+                            f_ishift=fshift*mask
+                            f_shift=np.fft.ifftshift(f_ishift)
+                            img_back=np.fft.ifft2(f_shift)
+                            img_back=np.abs(img_back)
+                            plt.subplot(221),plt.imshow(img, cmap= 'gray')
+                            plt.title('Original'), plt.xticks([]), plt.yticks([])
+                            plt.subplot(222),plt.imshow(tff, cmap= 'gray')
+                            plt.title('Transformada'), plt.xticks([]), plt.yticks([])
+                            plt.subplot(223),plt.imshow(mask, cmap= 'gray')
+                            plt.title('Mascarilla'), plt.xticks([]), plt.yticks([])
+                            plt.subplot(224),plt.imshow(img_back,cmap= 'gray')
+                            plt.title('Imagen Filtrada'), plt.xticks([]), plt.yticks([])
+                            plt.show()
+                        except:
+                            messagebox.showerror(message="Verifica los datos",title="Error")
                     else:
                         messagebox.showerror(message="El radio PA tiene que ser mayor que el radio PB",title="Error")
                 else:
@@ -315,6 +320,7 @@ def select():
 
         else:
             messagebox.showerror(message="No has seleccionado un comando",title="Error")
+    
     def TF():
         def backButter():
             ventanaButter.destroy()
@@ -329,36 +335,39 @@ def select():
                     radio0=entryButter0.get()
                     orden0=entry2Butter0.get()
                     if radio0.isnumeric() == True and orden0.isnumeric()==True:
-                        radio0=int(radio0)
-                        orden0=int(orden0)
-                        img = cv2.cvtColor(imagen,cv2.COLOR_BGR2GRAY)
-                        f=np.fft.fft2(img) 
-                        fshift=np.fft.fftshift(f)
-                        dft = cv2.dft(np.float32(img),flags = cv2.DFT_COMPLEX_OUTPUT)
-                        dft_shift = np.fft.fftshift(dft)
-                        tff= 20*np.log(cv2.magnitude(dft_shift[:,:,0],dft_shift[:,:,1]))
-                        rows,cols=img.shape
-                        crow,ccol=int(rows/2),int(cols/2)
-                        D0=radio0
-                        N=orden0
-                        mask=np.zeros((rows,cols))
-                        for i in range (rows):
-                            for j in range (cols):
-                                dist=(i-crow)**2+(j-ccol)**2
-                                mask[i,j]=np.sqrt((1+(dist/D0)**(2*N)))**(-1)
-                        f_ishift=fshift*mask
-                        f_shift=np.fft.ifftshift(f_ishift)
-                        img_back=np.fft.ifft2(f_shift)
-                        img_back=np.abs(img_back)
-                        plt.subplot(221),plt.imshow(img, cmap= 'gray')
-                        plt.title('Original'), plt.xticks([]), plt.yticks([])
-                        plt.subplot(222),plt.imshow(tff, cmap= 'gray')
-                        plt.title('Transformada'), plt.xticks([]), plt.yticks([])
-                        plt.subplot(223),plt.imshow(mask, cmap= 'gray')
-                        plt.title('Mascarilla'), plt.xticks([]), plt.yticks([])
-                        plt.subplot(224),plt.imshow(img_back,cmap= 'gray')
-                        plt.title('Imagen Filtrada'), plt.xticks([]), plt.yticks([])
-                        plt.show()
+                        try:
+                            radio0=int(radio0)
+                            orden0=int(orden0)
+                            img = cv2.cvtColor(imagen,cv2.COLOR_BGR2GRAY)
+                            f=np.fft.fft2(img) 
+                            fshift=np.fft.fftshift(f)
+                            dft = cv2.dft(np.float32(img),flags = cv2.DFT_COMPLEX_OUTPUT)
+                            dft_shift = np.fft.fftshift(dft)
+                            tff= 20*np.log(cv2.magnitude(dft_shift[:,:,0],dft_shift[:,:,1]))
+                            rows,cols=img.shape
+                            crow,ccol=int(rows/2),int(cols/2)
+                            D0=radio0
+                            N=orden0
+                            mask=np.zeros((rows,cols))
+                            for i in range (rows):
+                                for j in range (cols):
+                                    dist=(i-crow)**2+(j-ccol)**2
+                                    mask[i,j]=np.sqrt((1+(dist/D0)**(2*N)))**(-1)
+                            f_ishift=fshift*mask
+                            f_shift=np.fft.ifftshift(f_ishift)
+                            img_back=np.fft.ifft2(f_shift)
+                            img_back=np.abs(img_back)
+                            plt.subplot(221),plt.imshow(img, cmap= 'gray')
+                            plt.title('Original'), plt.xticks([]), plt.yticks([])
+                            plt.subplot(222),plt.imshow(tff, cmap= 'gray')
+                            plt.title('Transformada'), plt.xticks([]), plt.yticks([])
+                            plt.subplot(223),plt.imshow(mask, cmap= 'gray')
+                            plt.title('Mascarilla'), plt.xticks([]), plt.yticks([])
+                            plt.subplot(224),plt.imshow(img_back,cmap= 'gray')
+                            plt.title('Imagen Filtrada'), plt.xticks([]), plt.yticks([])
+                            plt.show()
+                        except:
+                            messagebox.showerror(message="Verifica los datos",title="Error")
                     else:
                         messagebox.showerror(message="Los datos ingresados no son númericos",title="Error")
                 ventanaButter0=tk.Tk()
@@ -401,38 +410,41 @@ def select():
                     radio1=entryButter1.get()
                     orden1=entry2Butter1.get()
                     if radio1.isnumeric() == True and orden1.isnumeric()==True:
-                        radio1=int(radio1)
-                        orden1=int(orden1)
-                        img = cv2.cvtColor(imagen,cv2.COLOR_BGR2GRAY)
-                        f=np.fft.fft2(img) 
-                        fshift=np.fft.fftshift(f)
-                        dft = cv2.dft(np.float32(img),flags = cv2.DFT_COMPLEX_OUTPUT)
-                        dft_shift = np.fft.fftshift(dft)
-                        tff= 20*np.log(cv2.magnitude(dft_shift[:,:,0],dft_shift[:,:,1]))
-                        rows,cols=img.shape
-                        crow,ccol=int(rows/2),int(cols/2)
-                        D0=radio1
-                        N=orden1
-                        mask=np.ones((rows,cols))
-                        for i in range (rows):
-                            for j in range (cols):
-                                dist=(i-crow)**2+(j-ccol)**2
-                                if dist==0:
-                                    continue
-                                mask[i,j]=np.sqrt((1+(D0/dist)**(2*N)))**(-1)
-                        f_ishift=fshift*mask
-                        f_shift=np.fft.ifftshift(f_ishift)
-                        img_back=np.fft.ifft2(f_shift)
-                        img_back=np.abs(img_back)
-                        plt.subplot(221),plt.imshow(img, cmap= 'gray')
-                        plt.title('Original'), plt.xticks([]), plt.yticks([])
-                        plt.subplot(222),plt.imshow(tff, cmap= 'gray')
-                        plt.title('Transformada'), plt.xticks([]), plt.yticks([])
-                        plt.subplot(223),plt.imshow(mask, cmap= 'gray')
-                        plt.title('Mascarilla'), plt.xticks([]), plt.yticks([])
-                        plt.subplot(224),plt.imshow(img_back,cmap= 'gray')
-                        plt.title('Imagen Filtrada'), plt.xticks([]), plt.yticks([])
-                        plt.show()
+                        try:
+                            radio1=int(radio1)
+                            orden1=int(orden1)
+                            img = cv2.cvtColor(imagen,cv2.COLOR_BGR2GRAY)
+                            f=np.fft.fft2(img) 
+                            fshift=np.fft.fftshift(f)
+                            dft = cv2.dft(np.float32(img),flags = cv2.DFT_COMPLEX_OUTPUT)
+                            dft_shift = np.fft.fftshift(dft)
+                            tff= 20*np.log(cv2.magnitude(dft_shift[:,:,0],dft_shift[:,:,1]))
+                            rows,cols=img.shape
+                            crow,ccol=int(rows/2),int(cols/2)
+                            D0=radio1
+                            N=orden1
+                            mask=np.ones((rows,cols))
+                            for i in range (rows):
+                                for j in range (cols):
+                                    dist=(i-crow)**2+(j-ccol)**2
+                                    if dist==0:
+                                        continue
+                                    mask[i,j]=np.sqrt((1+(D0/dist)**(2*N)))**(-1)
+                            f_ishift=fshift*mask
+                            f_shift=np.fft.ifftshift(f_ishift)
+                            img_back=np.fft.ifft2(f_shift)
+                            img_back=np.abs(img_back)
+                            plt.subplot(221),plt.imshow(img, cmap= 'gray')
+                            plt.title('Original'), plt.xticks([]), plt.yticks([])
+                            plt.subplot(222),plt.imshow(tff, cmap= 'gray')
+                            plt.title('Transformada'), plt.xticks([]), plt.yticks([])
+                            plt.subplot(223),plt.imshow(mask, cmap= 'gray')
+                            plt.title('Mascarilla'), plt.xticks([]), plt.yticks([])
+                            plt.subplot(224),plt.imshow(img_back,cmap= 'gray')
+                            plt.title('Imagen Filtrada'), plt.xticks([]), plt.yticks([])
+                            plt.show()
+                        except:
+                            messagebox.showerror(message="Verifica los datos",title="Error")
                     else:
                         messagebox.showerror(message="Los datos ingresados no son númericos",title="Error")
                 ventanaButter1=tk.Tk()
@@ -482,44 +494,47 @@ def select():
                         radio3 = int(radio3)
                         orden3 = int(orden3)
                         if radio2>radio3:
-                            img = cv2.cvtColor(imagen,cv2.COLOR_BGR2GRAY)
-                            f=np.fft.fft2(img)
-                            fshift=np.fft.fftshift(f)
-                            dft = cv2.dft(np.float32(img),flags = cv2.DFT_COMPLEX_OUTPUT)
-                            dft_shift = np.fft.fftshift(dft)
-                            tff= 20*np.log(cv2.magnitude(dft_shift[:,:,0],dft_shift[:,:,1]))
-                            rows,cols=img.shape
-                            crow,ccol=int(rows/2),int(cols/2)
-                            D0=radio2
-                            N=orden2
-                            mask1=np.zeros((rows,cols))
-                            for i in range (rows):
-                                for j in range (cols):
-                                    dist=(i-crow)**2+(j-ccol)**2
-                                    mask1[i,j]=np.sqrt((1+(dist/D0)**(2*N)))**(-1)
-                            D0=radio3
-                            N=orden3
-                            mask2=np.ones((rows,cols))
-                            for i in range (rows):
-                                for j in range (cols):
-                                    dist=(i-crow)**2+(j-ccol)**2
-                                    if dist==0:
-                                        continue
-                                    mask2[i,j]=np.sqrt((1+(D0/dist)**(2*N)))**(-1)
-                            mask=mask1*mask2
-                            f_ishift=fshift*mask
-                            f_shift=np.fft.ifftshift(f_ishift)
-                            img_back=np.fft.ifft2(f_shift)
-                            img_back=np.abs(img_back)
-                            plt.subplot(221),plt.imshow(img, cmap= 'gray')
-                            plt.title('Original'), plt.xticks([]), plt.yticks([])
-                            plt.subplot(222),plt.imshow(tff, cmap= 'gray')
-                            plt.title('Transformada'), plt.xticks([]), plt.yticks([])
-                            plt.subplot(223),plt.imshow(mask, cmap= 'gray')
-                            plt.title('Mascarilla'), plt.xticks([]), plt.yticks([])
-                            plt.subplot(224),plt.imshow(img_back,cmap= 'gray')
-                            plt.title('Imagen Filtrada'), plt.xticks([]), plt.yticks([])
-                            plt.show()
+                            try:
+                                img = cv2.cvtColor(imagen,cv2.COLOR_BGR2GRAY)
+                                f=np.fft.fft2(img)
+                                fshift=np.fft.fftshift(f)
+                                dft = cv2.dft(np.float32(img),flags = cv2.DFT_COMPLEX_OUTPUT)
+                                dft_shift = np.fft.fftshift(dft)
+                                tff= 20*np.log(cv2.magnitude(dft_shift[:,:,0],dft_shift[:,:,1]))
+                                rows,cols=img.shape
+                                crow,ccol=int(rows/2),int(cols/2)
+                                D0=radio2
+                                N=orden2
+                                mask1=np.zeros((rows,cols))
+                                for i in range (rows):
+                                    for j in range (cols):
+                                        dist=(i-crow)**2+(j-ccol)**2
+                                        mask1[i,j]=np.sqrt((1+(dist/D0)**(2*N)))**(-1)
+                                D0=radio3
+                                N=orden3
+                                mask2=np.ones((rows,cols))
+                                for i in range (rows):
+                                    for j in range (cols):
+                                        dist=(i-crow)**2+(j-ccol)**2
+                                        if dist==0:
+                                            continue
+                                        mask2[i,j]=np.sqrt((1+(D0/dist)**(2*N)))**(-1)
+                                mask=mask1*mask2
+                                f_ishift=fshift*mask
+                                f_shift=np.fft.ifftshift(f_ishift)
+                                img_back=np.fft.ifft2(f_shift)
+                                img_back=np.abs(img_back)
+                                plt.subplot(221),plt.imshow(img, cmap= 'gray')
+                                plt.title('Original'), plt.xticks([]), plt.yticks([])
+                                plt.subplot(222),plt.imshow(tff, cmap= 'gray')
+                                plt.title('Transformada'), plt.xticks([]), plt.yticks([])
+                                plt.subplot(223),plt.imshow(mask, cmap= 'gray')
+                                plt.title('Mascarilla'), plt.xticks([]), plt.yticks([])
+                                plt.subplot(224),plt.imshow(img_back,cmap= 'gray')
+                                plt.title('Imagen Filtrada'), plt.xticks([]), plt.yticks([])
+                                plt.show()
+                            except:
+                                messagebox.showerror(message="Verifica los datos",title="Error")
                         else:
                             messagebox.showerror(message="El radio PB tiene que ser mayor que el radio PA",title="Error")
                     else:
@@ -587,44 +602,47 @@ def select():
                         radio3 = int(radio3)
                         orden3 = int(orden3)
                         if radio2>radio3:
-                            img = cv2.cvtColor(imagen,cv2.COLOR_BGR2GRAY)
-                            f=np.fft.fft2(img)
-                            fshift=np.fft.fftshift(f)
-                            dft = cv2.dft(np.float32(img),flags = cv2.DFT_COMPLEX_OUTPUT)
-                            dft_shift = np.fft.fftshift(dft)
-                            tff= 20*np.log(cv2.magnitude(dft_shift[:,:,0],dft_shift[:,:,1]))
-                            rows,cols=img.shape
-                            crow,ccol=int(rows/2),int(cols/2)
-                            D0=radio2
-                            N=orden2
-                            mask1=np.zeros((rows,cols))
-                            for i in range (rows):
-                                for j in range (cols):
-                                    dist=(i-crow)**2+(j-ccol)**2
-                                    mask1[i,j]=np.sqrt((1+(dist/D0)**(2*N)))**(-1)
-                            D0=radio3
-                            N=orden3
-                            mask2=np.ones((rows,cols))
-                            for i in range (rows):
-                                for j in range (cols):
-                                    dist=(i-crow)**2+(j-ccol)**2
-                                    if dist==0:
-                                        continue
-                                    mask2[i,j]=np.sqrt((1+(D0/dist)**(2*N)))**(-1)
-                            mask=-mask1*mask2
-                            f_ishift=fshift*mask
-                            f_shift=np.fft.ifftshift(f_ishift)
-                            img_back=np.fft.ifft2(f_shift)
-                            img_back=np.abs(img_back)
-                            plt.subplot(221),plt.imshow(img, cmap= 'gray')
-                            plt.title('Original'), plt.xticks([]), plt.yticks([])
-                            plt.subplot(222),plt.imshow(tff, cmap= 'gray')
-                            plt.title('Transformada'), plt.xticks([]), plt.yticks([])
-                            plt.subplot(223),plt.imshow(mask, cmap= 'gray')
-                            plt.title('Mascarilla'), plt.xticks([]), plt.yticks([])
-                            plt.subplot(224),plt.imshow(img_back,cmap= 'gray')
-                            plt.title('Imagen Filtrada'), plt.xticks([]), plt.yticks([])
-                            plt.show()
+                            try:
+                                img = cv2.cvtColor(imagen,cv2.COLOR_BGR2GRAY)
+                                f=np.fft.fft2(img)
+                                fshift=np.fft.fftshift(f)
+                                dft = cv2.dft(np.float32(img),flags = cv2.DFT_COMPLEX_OUTPUT)
+                                dft_shift = np.fft.fftshift(dft)
+                                tff= 20*np.log(cv2.magnitude(dft_shift[:,:,0],dft_shift[:,:,1]))
+                                rows,cols=img.shape
+                                crow,ccol=int(rows/2),int(cols/2)
+                                D0=radio2
+                                N=orden2
+                                mask1=np.zeros((rows,cols))
+                                for i in range (rows):
+                                    for j in range (cols):
+                                        dist=(i-crow)**2+(j-ccol)**2
+                                        mask1[i,j]=np.sqrt((1+(dist/D0)**(2*N)))**(-1)
+                                D0=radio3
+                                N=orden3
+                                mask2=np.ones((rows,cols))
+                                for i in range (rows):
+                                    for j in range (cols):
+                                        dist=(i-crow)**2+(j-ccol)**2
+                                        if dist==0:
+                                            continue
+                                        mask2[i,j]=np.sqrt((1+(D0/dist)**(2*N)))**(-1)
+                                mask=-mask1*mask2
+                                f_ishift=fshift*mask
+                                f_shift=np.fft.ifftshift(f_ishift)
+                                img_back=np.fft.ifft2(f_shift)
+                                img_back=np.abs(img_back)
+                                plt.subplot(221),plt.imshow(img, cmap= 'gray')
+                                plt.title('Original'), plt.xticks([]), plt.yticks([])
+                                plt.subplot(222),plt.imshow(tff, cmap= 'gray')
+                                plt.title('Transformada'), plt.xticks([]), plt.yticks([])
+                                plt.subplot(223),plt.imshow(mask, cmap= 'gray')
+                                plt.title('Mascarilla'), plt.xticks([]), plt.yticks([])
+                                plt.subplot(224),plt.imshow(img_back,cmap= 'gray')
+                                plt.title('Imagen Filtrada'), plt.xticks([]), plt.yticks([])
+                                plt.show()
+                            except:
+                                messagebox.showerror(message="Verifica los datos",title="Error")
                         else:
                             messagebox.showerror(message="El radio PA tiene que ser mayor que el radio PB",title="Error")
                     else:
@@ -686,34 +704,37 @@ def select():
                 def Gauss0():
                     radio0=entryGauss0.get()
                     if radio0.isnumeric() == True:
-                        radio0=int(radio0)
-                        img = cv2.cvtColor(imagen,cv2.COLOR_BGR2GRAY)
-                        f=np.fft.fft2(img) 
-                        fshift=np.fft.fftshift(f)
-                        dft = cv2.dft(np.float32(img),flags = cv2.DFT_COMPLEX_OUTPUT)
-                        dft_shift = np.fft.fftshift(dft)
-                        tff= 20*np.log(cv2.magnitude(dft_shift[:,:,0],dft_shift[:,:,1]))
-                        rows,cols=img.shape
-                        crow,ccol=int(rows/2),int(cols/2)
-                        D0=radio0
-                        mask=np.zeros((rows,cols))
-                        for i in range (rows):
-                            for j in range (cols):
-                                dist=(i-crow)**2+(j-ccol)**2
-                                mask[i,j]=np.exp(-(((dist)**(2))/((2)*((D0)**(2)))))
-                        f_ishift=fshift*mask
-                        f_shift=np.fft.ifftshift(f_ishift)
-                        img_back=np.fft.ifft2(f_shift)
-                        img_back=np.abs(img_back)
-                        plt.subplot(221),plt.imshow(img, cmap= 'gray')
-                        plt.title('Original'), plt.xticks([]), plt.yticks([])
-                        plt.subplot(222),plt.imshow(tff, cmap= 'gray')
-                        plt.title('Transformada'), plt.xticks([]), plt.yticks([])
-                        plt.subplot(223),plt.imshow(mask, cmap= 'gray')
-                        plt.title('Mascarilla'), plt.xticks([]), plt.yticks([])
-                        plt.subplot(224),plt.imshow(img_back,cmap= 'gray')
-                        plt.title('Imagen Filtrada'), plt.xticks([]), plt.yticks([])
-                        plt.show()
+                        try:
+                            radio0=int(radio0)
+                            img = cv2.cvtColor(imagen,cv2.COLOR_BGR2GRAY)
+                            f=np.fft.fft2(img) 
+                            fshift=np.fft.fftshift(f)
+                            dft = cv2.dft(np.float32(img),flags = cv2.DFT_COMPLEX_OUTPUT)
+                            dft_shift = np.fft.fftshift(dft)
+                            tff= 20*np.log(cv2.magnitude(dft_shift[:,:,0],dft_shift[:,:,1]))
+                            rows,cols=img.shape
+                            crow,ccol=int(rows/2),int(cols/2)
+                            D0=radio0
+                            mask=np.zeros((rows,cols))
+                            for i in range (rows):
+                                for j in range (cols):
+                                    dist=(i-crow)**2+(j-ccol)**2
+                                    mask[i,j]=np.exp(-(((dist)**(2))/((2)*((D0)**(2)))))
+                            f_ishift=fshift*mask
+                            f_shift=np.fft.ifftshift(f_ishift)
+                            img_back=np.fft.ifft2(f_shift)
+                            img_back=np.abs(img_back)
+                            plt.subplot(221),plt.imshow(img, cmap= 'gray')
+                            plt.title('Original'), plt.xticks([]), plt.yticks([])
+                            plt.subplot(222),plt.imshow(tff, cmap= 'gray')
+                            plt.title('Transformada'), plt.xticks([]), plt.yticks([])
+                            plt.subplot(223),plt.imshow(mask, cmap= 'gray')
+                            plt.title('Mascarilla'), plt.xticks([]), plt.yticks([])
+                            plt.subplot(224),plt.imshow(img_back,cmap= 'gray')
+                            plt.title('Imagen Filtrada'), plt.xticks([]), plt.yticks([])
+                            plt.show()
+                        except:
+                            messagebox.showerror(message="Verifica los datos",title="Error")
                     else:
                         messagebox.showerror(message="Los datos ingresados no son númericos",title="Error")
                 ventanaGauss0=tk.Tk()
@@ -747,36 +768,39 @@ def select():
                 def Gauss1():
                     radio1=entryGauss1.get()
                     if radio1.isnumeric() == True:
-                        radio1=int(radio1)
-                        img = cv2.cvtColor(imagen,cv2.COLOR_BGR2GRAY)
-                        f=np.fft.fft2(img) 
-                        fshift=np.fft.fftshift(f)
-                        dft = cv2.dft(np.float32(img),flags = cv2.DFT_COMPLEX_OUTPUT)
-                        dft_shift = np.fft.fftshift(dft)
-                        tff= 20*np.log(cv2.magnitude(dft_shift[:,:,0],dft_shift[:,:,1]))
-                        rows,cols=img.shape
-                        crow,ccol=int(rows/2),int(cols/2)
-                        D0=radio1
-                        mask=np.ones((rows,cols))
-                        for i in range (rows):
-                            for j in range (cols):
-                                dist=(i-crow)**2+(j-ccol)**2
-                                if dist==0:
-                                    continue
-                                mask[i,j]=1-(np.exp(-(((dist)**(2))/((2)*((D0)**(2))))))
-                        f_ishift=fshift*mask
-                        f_shift=np.fft.ifftshift(f_ishift)
-                        img_back=np.fft.ifft2(f_shift)
-                        img_back=np.abs(img_back)
-                        plt.subplot(221),plt.imshow(img, cmap= 'gray')
-                        plt.title('Original'), plt.xticks([]), plt.yticks([])
-                        plt.subplot(222),plt.imshow(tff, cmap= 'gray')
-                        plt.title('Transformada'), plt.xticks([]), plt.yticks([])
-                        plt.subplot(223),plt.imshow(mask, cmap= 'gray')
-                        plt.title('Mascarilla'), plt.xticks([]), plt.yticks([])
-                        plt.subplot(224),plt.imshow(img_back,cmap= 'gray')
-                        plt.title('Imagen Filtrada'), plt.xticks([]), plt.yticks([])
-                        plt.show()
+                        try:
+                            radio1=int(radio1)
+                            img = cv2.cvtColor(imagen,cv2.COLOR_BGR2GRAY)
+                            f=np.fft.fft2(img) 
+                            fshift=np.fft.fftshift(f)
+                            dft = cv2.dft(np.float32(img),flags = cv2.DFT_COMPLEX_OUTPUT)
+                            dft_shift = np.fft.fftshift(dft)
+                            tff= 20*np.log(cv2.magnitude(dft_shift[:,:,0],dft_shift[:,:,1]))
+                            rows,cols=img.shape
+                            crow,ccol=int(rows/2),int(cols/2)
+                            D0=radio1
+                            mask=np.ones((rows,cols))
+                            for i in range (rows):
+                                for j in range (cols):
+                                    dist=(i-crow)**2+(j-ccol)**2
+                                    if dist==0:
+                                        continue
+                                    mask[i,j]=1-(np.exp(-(((dist)**(2))/((2)*((D0)**(2))))))
+                            f_ishift=fshift*mask
+                            f_shift=np.fft.ifftshift(f_ishift)
+                            img_back=np.fft.ifft2(f_shift)
+                            img_back=np.abs(img_back)
+                            plt.subplot(221),plt.imshow(img, cmap= 'gray')
+                            plt.title('Original'), plt.xticks([]), plt.yticks([])
+                            plt.subplot(222),plt.imshow(tff, cmap= 'gray')
+                            plt.title('Transformada'), plt.xticks([]), plt.yticks([])
+                            plt.subplot(223),plt.imshow(mask, cmap= 'gray')
+                            plt.title('Mascarilla'), plt.xticks([]), plt.yticks([])
+                            plt.subplot(224),plt.imshow(img_back,cmap= 'gray')
+                            plt.title('Imagen Filtrada'), plt.xticks([]), plt.yticks([])
+                            plt.show()
+                        except:
+                            messagebox.showerror(message="Verifica los datos",title="Error")
                     else:
                         messagebox.showerror(message="Los datos ingresados no son númericos",title="Error")
                 ventanaGauss1=tk.Tk()
@@ -813,42 +837,45 @@ def select():
                         radio2 = int(radio2)
                         radio3 = int(radio3)
                         if radio2>radio3:
-                            img = cv2.cvtColor(imagen,cv2.COLOR_BGR2GRAY)
-                            f=np.fft.fft2(img)
-                            fshift=np.fft.fftshift(f)
-                            dft = cv2.dft(np.float32(img),flags = cv2.DFT_COMPLEX_OUTPUT)
-                            dft_shift = np.fft.fftshift(dft)
-                            tff= 20*np.log(cv2.magnitude(dft_shift[:,:,0],dft_shift[:,:,1]))
-                            rows,cols=img.shape
-                            crow,ccol=int(rows/2),int(cols/2)
-                            D0=radio2
-                            mask1=np.ones((rows,cols))
-                            for i in range (rows):
-                                for j in range (cols):
-                                    dist=(i-crow)**2+(j-ccol)**2
-                                    mask1[i,j]=(np.exp(-(((dist)**(2))/((2)*((D0)**(2))))))
-                            D0=radio3
-                            mask2=np.ones((rows,cols))
-                            for i in range (rows):
-                                for j in range (cols):
-                                    dist=(i-crow)**2+(j-ccol)**2
-                                    if dist==0:
-                                        continue
-                                    mask2[i,j]=1-(np.exp(-(((dist)**(2))/((2)*((D0)**(2))))))
-                            mask=mask1*mask2
-                            f_ishift=fshift*mask
-                            f_shift=np.fft.ifftshift(f_ishift)
-                            img_back=np.fft.ifft2(f_shift)
-                            img_back=np.abs(img_back)
-                            plt.subplot(221),plt.imshow(img, cmap= 'gray')
-                            plt.title('Original'), plt.xticks([]), plt.yticks([])
-                            plt.subplot(222),plt.imshow(tff, cmap= 'gray')
-                            plt.title('Transformada'), plt.xticks([]), plt.yticks([])
-                            plt.subplot(223),plt.imshow(mask, cmap= 'gray')
-                            plt.title('Mascarilla'), plt.xticks([]), plt.yticks([])
-                            plt.subplot(224),plt.imshow(img_back,cmap= 'gray')
-                            plt.title('Imagen Filtrada'), plt.xticks([]), plt.yticks([])
-                            plt.show()
+                            try:
+                                img = cv2.cvtColor(imagen,cv2.COLOR_BGR2GRAY)
+                                f=np.fft.fft2(img)
+                                fshift=np.fft.fftshift(f)
+                                dft = cv2.dft(np.float32(img),flags = cv2.DFT_COMPLEX_OUTPUT)
+                                dft_shift = np.fft.fftshift(dft)
+                                tff= 20*np.log(cv2.magnitude(dft_shift[:,:,0],dft_shift[:,:,1]))
+                                rows,cols=img.shape
+                                crow,ccol=int(rows/2),int(cols/2)
+                                D0=radio2
+                                mask1=np.ones((rows,cols))
+                                for i in range (rows):
+                                    for j in range (cols):
+                                        dist=(i-crow)**2+(j-ccol)**2
+                                        mask1[i,j]=(np.exp(-(((dist)**(2))/((2)*((D0)**(2))))))
+                                D0=radio3
+                                mask2=np.ones((rows,cols))
+                                for i in range (rows):
+                                    for j in range (cols):
+                                        dist=(i-crow)**2+(j-ccol)**2
+                                        if dist==0:
+                                            continue
+                                        mask2[i,j]=1-(np.exp(-(((dist)**(2))/((2)*((D0)**(2))))))
+                                mask=mask1*mask2
+                                f_ishift=fshift*mask
+                                f_shift=np.fft.ifftshift(f_ishift)
+                                img_back=np.fft.ifft2(f_shift)
+                                img_back=np.abs(img_back)
+                                plt.subplot(221),plt.imshow(img, cmap= 'gray')
+                                plt.title('Original'), plt.xticks([]), plt.yticks([])
+                                plt.subplot(222),plt.imshow(tff, cmap= 'gray')
+                                plt.title('Transformada'), plt.xticks([]), plt.yticks([])
+                                plt.subplot(223),plt.imshow(mask, cmap= 'gray')
+                                plt.title('Mascarilla'), plt.xticks([]), plt.yticks([])
+                                plt.subplot(224),plt.imshow(img_back,cmap= 'gray')
+                                plt.title('Imagen Filtrada'), plt.xticks([]), plt.yticks([])
+                                plt.show()
+                            except:
+                                messagebox.showerror(message="Verifica los datos",title="Error")
                         else:
                             messagebox.showerror(message="El radio PB tiene que ser mayor que el radio PA",title="Error")
                     else:
@@ -896,42 +923,45 @@ def select():
                         radio2 = int(radio2)
                         radio3 = int(radio3)
                         if radio2>radio3:
-                            img = cv2.cvtColor(imagen,cv2.COLOR_BGR2GRAY)
-                            f=np.fft.fft2(img)
-                            fshift=np.fft.fftshift(f)
-                            dft = cv2.dft(np.float32(img),flags = cv2.DFT_COMPLEX_OUTPUT)
-                            dft_shift = np.fft.fftshift(dft)
-                            tff= 20*np.log(cv2.magnitude(dft_shift[:,:,0],dft_shift[:,:,1]))
-                            rows,cols=img.shape
-                            crow,ccol=int(rows/2),int(cols/2)
-                            D0=radio2
-                            mask1=np.ones((rows,cols))
-                            for i in range (rows):
-                                for j in range (cols):
-                                    dist=(i-crow)**2+(j-ccol)**2
-                                    mask1[i,j]=(np.exp(-(((dist)**(2))/((2)*((D0)**(2))))))
-                            D0=radio3
-                            mask2=np.ones((rows,cols))
-                            for i in range (rows):
-                                for j in range (cols):
-                                    dist=(i-crow)**2+(j-ccol)**2
-                                    if dist==0:
-                                        continue
-                                    mask2[i,j]=1-(np.exp(-(((dist)**(2))/((2)*((D0)**(2))))))
-                            mask=-mask1*mask2
-                            f_ishift=fshift*mask
-                            f_shift=np.fft.ifftshift(f_ishift)
-                            img_back=np.fft.ifft2(f_shift)
-                            img_back=np.abs(img_back)
-                            plt.subplot(221),plt.imshow(img, cmap= 'gray')
-                            plt.title('Original'), plt.xticks([]), plt.yticks([])
-                            plt.subplot(222),plt.imshow(tff, cmap= 'gray')
-                            plt.title('Transformada'), plt.xticks([]), plt.yticks([])
-                            plt.subplot(223),plt.imshow(mask, cmap= 'gray')
-                            plt.title('Mascarilla'), plt.xticks([]), plt.yticks([])
-                            plt.subplot(224),plt.imshow(img_back,cmap= 'gray')
-                            plt.title('Imagen Filtrada'), plt.xticks([]), plt.yticks([])
-                            plt.show()
+                            try:
+                                img = cv2.cvtColor(imagen,cv2.COLOR_BGR2GRAY)
+                                f=np.fft.fft2(img)
+                                fshift=np.fft.fftshift(f)
+                                dft = cv2.dft(np.float32(img),flags = cv2.DFT_COMPLEX_OUTPUT)
+                                dft_shift = np.fft.fftshift(dft)
+                                tff= 20*np.log(cv2.magnitude(dft_shift[:,:,0],dft_shift[:,:,1]))
+                                rows,cols=img.shape
+                                crow,ccol=int(rows/2),int(cols/2)
+                                D0=radio2
+                                mask1=np.ones((rows,cols))
+                                for i in range (rows):
+                                    for j in range (cols):
+                                        dist=(i-crow)**2+(j-ccol)**2
+                                        mask1[i,j]=(np.exp(-(((dist)**(2))/((2)*((D0)**(2))))))
+                                D0=radio3
+                                mask2=np.ones((rows,cols))
+                                for i in range (rows):
+                                    for j in range (cols):
+                                        dist=(i-crow)**2+(j-ccol)**2
+                                        if dist==0:
+                                            continue
+                                        mask2[i,j]=1-(np.exp(-(((dist)**(2))/((2)*((D0)**(2))))))
+                                mask=-mask1*mask2
+                                f_ishift=fshift*mask
+                                f_shift=np.fft.ifftshift(f_ishift)
+                                img_back=np.fft.ifft2(f_shift)
+                                img_back=np.abs(img_back)
+                                plt.subplot(221),plt.imshow(img, cmap= 'gray')
+                                plt.title('Original'), plt.xticks([]), plt.yticks([])
+                                plt.subplot(222),plt.imshow(tff, cmap= 'gray')
+                                plt.title('Transformada'), plt.xticks([]), plt.yticks([])
+                                plt.subplot(223),plt.imshow(mask, cmap= 'gray')
+                                plt.title('Mascarilla'), plt.xticks([]), plt.yticks([])
+                                plt.subplot(224),plt.imshow(img_back,cmap= 'gray')
+                                plt.title('Imagen Filtrada'), plt.xticks([]), plt.yticks([])
+                                plt.show()
+                            except:
+                                messagebox.showerror(message="Verifica los datos",title="Error")
                         else:
                             messagebox.showerror(message="El radio PB tiene que ser mayor que el radio PA",title="Error")
                     else:
@@ -1003,7 +1033,6 @@ def select():
             ventanaGauss.mainloop()
         else:
             messagebox.showerror(message="No has seleccionado un comando",title="Error")
-
 
 #-------------------------------------------------------------------------------------------
 
