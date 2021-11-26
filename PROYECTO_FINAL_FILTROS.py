@@ -963,7 +963,7 @@ def select():
                             except:
                                 messagebox.showerror(message="Verifica los datos",title="Error")
                         else:
-                            messagebox.showerror(message="El radio PB tiene que ser mayor que el radio PA",title="Error")
+                            messagebox.showerror(message="El radio PA tiene que ser mayor que el radio PB",title="Error")
                     else:
                         messagebox.showerror(message="Los datos ingresados no son númericos",title="Error")
                 ventanaGauss3=tk.Tk()
@@ -972,7 +972,7 @@ def select():
                 miframeGauss3.pack()
                 miframeGauss3.config(bg="bisque",cursor='hand2')
                 #----------------------------PB------------------------------------------------------------------
-                mensajeGauss0=tk.Label(miframeGauss3,text="Ingresa el valor del radio PB",font=('Arial 15'),bg='bisque')
+                mensajeGauss0=tk.Label(miframeGauss3,text="Ingresa el valor del radio PA",font=('Arial 15'),bg='bisque')
                 mensajeGauss0.grid(row=0,column=0,padx=10,pady=10)
                 
                 entryGauss3 = tk.Entry(miframeGauss3,font="Arial 18")
@@ -980,7 +980,7 @@ def select():
                 entryGauss3.config(justify="center")
                 
                 #-----------------------------PA--------------------------------------------------------------
-                mensajeGauss0=tk.Label(miframeGauss3,text="Ingresa el valor del radio PA",font=('Arial 15'),bg='bisque')
+                mensajeGauss0=tk.Label(miframeGauss3,text="Ingresa el valor del radio PB",font=('Arial 15'),bg='bisque')
                 mensajeGauss0.grid(row=0,column=2,padx=10,pady=10)
                 
                 entry3Gauss3 = tk.Entry(miframeGauss3,font="Arial 18")
