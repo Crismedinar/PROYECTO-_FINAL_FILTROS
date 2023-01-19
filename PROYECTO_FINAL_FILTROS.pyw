@@ -44,9 +44,9 @@ def select():
                         tff= 20*np.log(cv2.magnitude(dft_shift[:,:,0],dft_shift[:,:,1]))
                         rows,cols=img.shape
                         crow,ccol=int(rows/2),int(cols/2)
-                        mask=np.ones((rows,cols), np.uint8)
+                        mask=np.zeros((rows,cols), np.uint8)
                         D=num
-                        mask[crow-D:crow+D, ccol-D:ccol+D]=0
+                        mask[crow-D:crow+D, ccol-D:ccol+D]=1
                         f_ishift=fshift*mask
                         f_shift=np.fft.ifftshift(f_ishift)
                         img_back=np.fft.ifft2(f_shift)
@@ -107,9 +107,9 @@ def select():
                         tff= 20*np.log(cv2.magnitude(dft_shift[:,:,0],dft_shift[:,:,1]))
                         rows,cols=img.shape
                         crow,ccol=int(rows/2),int(cols/2)
-                        mask=np.zeros((rows,cols), np.uint8)
+                        mask=np.ones((rows,cols), np.uint8)
                         D=num
-                        mask[crow-D:crow+D, ccol-D:ccol+D]=1
+                        mask[crow-D:crow+D, ccol-D:ccol+D]=0
                         f_ishift=fshift*mask
                         f_shift=np.fft.ifftshift(f_ishift)
                         img_back=np.fft.ifft2(f_shift)
@@ -1108,11 +1108,11 @@ img3=img3.resize((220, 220),Image.ANTIALIAS)
 img3=ImageTk.PhotoImage(img3)
 
 boton1=tk.Button(miframe,image=img1,command=select1)
-boton1.grid(row=2,column=0,padx=2,pady=2)
+boton1.grid(row=2,column=0,padx=20,pady=5)
 boton2=tk.Button(miframe,image=img2,command=select2)
-boton2.grid(row=2,column=1,padx=2,pady=2)
+boton2.grid(row=2,column=1,padx=20,pady=5)
 boton3=tk.Button(miframe,image=img3,command=select3)
-boton3.grid(row=2,column=2,padx=2,pady=2)
+boton3.grid(row=2,column=2,padx=20,pady=5)
 
 #Menu
 menu=ttk.Combobox(miframe,font="Arial 12",justify=tk.CENTER,width=35,state="readonly")
